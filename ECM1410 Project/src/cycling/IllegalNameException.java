@@ -14,7 +14,7 @@ public class IllegalNameException extends Exception {
 	 * Constructs an instance of the exception with no message
 	 */
 	public IllegalNameException() {
-		// do nothing
+		System.out.println("This team name is already in use");
 	}
 
 	/**

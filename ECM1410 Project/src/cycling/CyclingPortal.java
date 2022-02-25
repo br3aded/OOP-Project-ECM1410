@@ -110,6 +110,19 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public int createTeam(String name, String description) throws IllegalNameException, InvalidNameException {
+		if ((name == null) || (name.length() > 16)) {
+			throw new InvalidNameException();
+		}
+		for (int i = 0; i< name.length() ;  i++) {
+			if (name.charAt(i) == ' ') {
+				throw new InvalidNameException();
+			}
+		}
+		for(int i = 0; i< teamList.size(); i++) {
+			if(teamList.get(i).getTeamName() == name) {
+				throw new IllegalNameException();
+			}
+		}
 		teamList.add(new Team(name,description));// add functionality for filling in the gaps
 		return teamList.size() -1; // change functionality when filling in gaps
 	}
@@ -141,8 +154,7 @@ public class CyclingPortal implements CyclingPortalInterface {
 	}
 
 	@Override
-	public int createRider(int teamID, String name, int yearOfBirth)
-			throws IDNotRecognisedException, IllegalArgumentException {
+	public int createRider(int teamID, String name, int yearOfBirth) throws IDNotRecognisedException, IllegalArgumentException {
 		riderList.add(new Rider(teamID,name,yearOfBirth));
 		teamList.get(teamID).addRider(riderList.size() -1);
 		return riderList.size() -1;

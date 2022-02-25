@@ -15,7 +15,7 @@ public class InvalidNameException extends Exception {
 	 * Constructs an instance of the exception with no message
 	 */
 	public InvalidNameException() {
-		// do nothing
+		System.out.println("invalid name");
 	}
 
 	/**

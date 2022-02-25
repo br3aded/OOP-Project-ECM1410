@@ -35,7 +35,7 @@ public class Rider {
 		
 
 		public String toString() {
-			return "Rider[teamID = "+teamID+ ", riderName="+ riderName+"yearOfBirth"+yearOfBirth+"]";
+			return "Rider[teamID = "+teamID+ ", riderName="+ riderName+", yearOfBirth="+yearOfBirth+"]";
 		}
 	}
 
