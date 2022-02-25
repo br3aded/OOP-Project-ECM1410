@@ -37,5 +37,14 @@ public class Team {
 		riderIdList.add(riderId);
 	}
 	
+	public void setRiderList(int riderId) {
+		for(int i = 0; i< riderIdList.size(); i++) {
+			if(riderIdList.get(i) == riderId) {
+				riderIdList.set(i, null);
+				break;
+			}
+		}
+	}
+	
 	public ArrayList<Integer> getRiderList() {return riderIdList;}
 }

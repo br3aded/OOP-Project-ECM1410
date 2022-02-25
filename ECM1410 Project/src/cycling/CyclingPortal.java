@@ -10,17 +10,24 @@ import java.util.List;
 public class CyclingPortal implements CyclingPortalInterface {
 	ArrayList<Team> teamList = new ArrayList<Team>();
 	ArrayList<Rider> riderList = new ArrayList<Rider>();
+	ArrayList<Race> raceList = new ArrayList<Race>();
 	
 	@Override
 	public int[] getRaceIds() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Integer> tempRaceIdList = new ArrayList<Integer>();
+		for(int i = 0; i< raceList.size(); i++) {
+			if(raceList.get(i) != null) {
+				tempRaceIdList.add(i);
+			}
+		}
+		int[] raceIdList = tempRaceIdList.stream().mapToInt(i -> i).toArray();
+		return raceIdList;
 	}
 
 	@Override
 	public int createRace(String name, String description) throws IllegalNameException, InvalidNameException {
-		// TODO Auto-generated method stub
-		return 0;
+		raceList.add(new Race(name,description));// add functionality for filling in the gaps
+		return raceList.size() -1; // change functionality when filling in gaps
 	}
 
 	@Override
@@ -31,7 +38,8 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public void removeRaceById(int raceId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
+		//delete stages
+		raceList.set(raceId, null);
 
 	}
 
@@ -108,8 +116,10 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public void removeTeam(int teamId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-
+		for(int i=0; i<teamList.get(teamId).getRiderList().size(); i++) {
+			riderList.set(teamList.get(teamId).getRiderList().get(i),null);
+		}
+		teamList.set(teamId, null);
 	}
 
 	@Override
@@ -126,7 +136,7 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public int[] getTeamRiders(int teamId) throws IDNotRecognisedException {
-		int[] riderIdList = teamList.get(teamId).getRiderList().stream().mapToInt(i -> i).toArray();
+		int[] riderIdList = teamList.get(teamId).getRiderList().stream().filter(i -> i != null).mapToInt(i -> i).toArray();
 		return riderIdList;
 	}
 
@@ -140,7 +150,8 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public void removeRider(int riderId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
+		teamList.get(riderList.get(riderId).getTeamID()).setRiderList(riderId);
+		riderList.set(riderId, null);
 
 	}
 
