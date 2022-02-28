@@ -115,12 +115,12 @@ public class CyclingPortal implements CyclingPortalInterface {
 		}
 		for (int i = 0; i< name.length() ;  i++) {
 			if (name.charAt(i) == ' ') {
-				throw new InvalidNameException();
+				throw new InvalidNameException("A team name must not contain any spaces");
 			}
 		}
 		for(int i = 0; i< teamList.size(); i++) {
 			if(teamList.get(i).getTeamName() == name) {
-				throw new IllegalNameException();
+				throw new IllegalNameException("The team name is already in use");
 			}
 		}
 		teamList.add(new Team(name,description));// add functionality for filling in the gaps
