@@ -11,6 +11,7 @@ public class CyclingPortal implements CyclingPortalInterface {
 	ArrayList<Team> teamList = new ArrayList<Team>();
 	ArrayList<Rider> riderList = new ArrayList<Rider>();
 	ArrayList<Race> raceList = new ArrayList<Race>();
+	ArrayList<Stage> stageList = new ArrayList<Stage>();
 	
 	@Override
 	public int[] getRaceIds() {
@@ -38,23 +39,21 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public void removeRaceById(int raceId) throws IDNotRecognisedException {
-		//delete stages
 		raceList.set(raceId, null);
-
 	}
 
 	@Override
 	public int getNumberOfStages(int raceId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return 0;
+		return raceList.get(raceId).getStageList().size();
 	}
 
 	@Override
 	public int addStageToRace(int raceId, String stageName, String description, double length, LocalDateTime startTime,
 			StageType type)
 			throws IDNotRecognisedException, IllegalNameException, InvalidNameException, InvalidLengthException {
-		// TODO Auto-generated method stub
-		return 0;
+		stageList.add(new Stage(raceId,stageName,description,length,startTime,type));
+		raceList.get(raceId).addStage(stageList.size() -1);
+		return stageList.size() -1;
 	}
 
 	@Override
@@ -65,8 +64,7 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public double getStageLength(int stageId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return 0;
+		return stageList.get(stageId).getStageLength();
 	}
 
 	@Override

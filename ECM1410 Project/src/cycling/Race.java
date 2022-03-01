@@ -1,6 +1,26 @@
 package cycling;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Race {
+	private ArrayList<Integer> stageIdList;
+	
+	public void addStage(int stageId) {
+		stageIdList.add(stageId);
+	}
+	
+	public void setStageList(int stageId) {
+		for(int i = 0; i< stageIdList.size(); i++) {
+			if(stageIdList.get(i) == stageId) {
+				stageIdList.set(i, null);
+				break;
+			}
+		}
+	}
+	
+	public ArrayList<Integer> getStageList() {return stageIdList;}
+	
 	private String raceName;
 	
 	public String getRaceName() {
@@ -24,6 +44,7 @@ public class Race {
 	public Race(String raceName, String raceDescription) {
 		this.raceName = raceName;
 		this.raceDescription = raceDescription;
+		this.stageIdList = new ArrayList<Integer>();
 	}
 
 	@Override
@@ -31,8 +52,4 @@ public class Race {
 		return "Race [raceName=" + raceName + ", raceDescription=" + raceDescription + "]";
 	}
 	
-	
-
-	
-
 }
