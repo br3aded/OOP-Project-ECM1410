@@ -40,6 +40,16 @@ public class Stage {
 		return stageType;
 	}
 
+	private boolean isConcluded;
+	
+	public boolean getIsConcluded() {
+		return isConcluded;
+	}
+
+	public void setIsConcluded(boolean isConcluded) {
+		this.isConcluded = isConcluded;
+	}
+	
 	public Stage(int raceId, String stageName, String description, double length, LocalDateTime startTime,StageType type) {
 		this.raceId = raceId;
 		this.stageName = stageName;
@@ -47,7 +57,10 @@ public class Stage {
 		this.stageLength = length;
 		this.stageStartTime = startTime;
 		this.stageType = type;
+		this.setConcluded(false);
 	}
+
+	
 	
 	
 }

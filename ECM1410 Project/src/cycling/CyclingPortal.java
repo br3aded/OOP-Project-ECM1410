@@ -12,6 +12,7 @@ public class CyclingPortal implements CyclingPortalInterface {
 	ArrayList<Rider> riderList = new ArrayList<Rider>();
 	ArrayList<Race> raceList = new ArrayList<Race>();
 	ArrayList<Stage> stageList = new ArrayList<Stage>();
+	ArrayList<Object> segmentList = new ArrayList<>();
 	
 	@Override
 	public int[] getRaceIds() {
@@ -77,14 +78,20 @@ public class CyclingPortal implements CyclingPortalInterface {
 	public int addCategorizedClimbToStage(int stageId, Double location, SegmentType type, Double averageGradient,
 			Double length) throws IDNotRecognisedException, InvalidLocationException, InvalidStageStateException,
 			InvalidStageTypeException {
-		// TODO Auto-generated method stub
-		return 0;
+		if(stageList.get(stageId).getStageType() == StageType.TT) {
+			throw new InvalidStageTypeException("Cannot add segements to time trial stage type");
+		}
+		segmentList.add(new MountainSegment(stageId, location , type , averageGradient , length));
+		return segmentList.size()-1;
 	}
 
 	@Override
 	public int addIntermediateSprintToStage(int stageId, double location) throws IDNotRecognisedException,
 			InvalidLocationException, InvalidStageStateException, InvalidStageTypeException {
-		// TODO Auto-generated method stub
+		if(stageList.get(stageId).getStageType() == StageType.TT) {
+			throw new InvalidStageTypeException("Cannot add segements to time trial stage type");
+		}
+		
 		return 0;
 	}
 
@@ -96,8 +103,7 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public void concludeStagePreparation(int stageId) throws IDNotRecognisedException, InvalidStageStateException {
-		// TODO Auto-generated method stub
-
+		stageList.get(stageId).setIsConcluded(true);
 	}
 
 	@Override
