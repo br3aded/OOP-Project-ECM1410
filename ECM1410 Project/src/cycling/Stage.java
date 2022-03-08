@@ -63,10 +63,10 @@ public class Stage {
 		this.setIsConcluded(false);
 	}
 	
-	public void setSegmentList(int segmentId) {
+	public void removeSegment(int segmentId) {
 		for(int i = 0; i< segmentIdList.size(); i++) {
 			if(segmentIdList.get(i) == segmentId) {
-				segmentIdList.set(i, null);
+				segmentIdList.remove(i);
 				break;
 			}
 		}

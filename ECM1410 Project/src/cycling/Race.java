@@ -10,10 +10,10 @@ public class Race {
 		stageIdList.add(stageId);
 	}
 	
-	public void setStageList(int stageId) {
+	public void removeStage(int stageId) {
 		for(int i = 0; i< stageIdList.size(); i++) {
 			if(stageIdList.get(i) == stageId) {
-				stageIdList.set(i, null);
+				stageIdList.remove(i);
 				break;
 			}
 		}
