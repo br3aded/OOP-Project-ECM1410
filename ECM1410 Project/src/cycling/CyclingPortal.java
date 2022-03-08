@@ -12,7 +12,7 @@ public class CyclingPortal implements CyclingPortalInterface {
 	ArrayList<Rider> riderList = new ArrayList<Rider>();
 	ArrayList<Race> raceList = new ArrayList<Race>();
 	ArrayList<Stage> stageList = new ArrayList<Stage>();
-	ArrayList<Object> segmentList = new ArrayList<>();
+	ArrayList<Segment> segmentList = new ArrayList<>();
 	
 	@Override
 	public int[] getRaceIds() {
@@ -78,10 +78,12 @@ public class CyclingPortal implements CyclingPortalInterface {
 	public int addCategorizedClimbToStage(int stageId, Double location, SegmentType type, Double averageGradient,
 			Double length) throws IDNotRecognisedException, InvalidLocationException, InvalidStageStateException,
 			InvalidStageTypeException {
-		if(stageList.get(stageId).getStageType() == StageType.TT) {
-			throw new InvalidStageTypeException("Cannot add segements to time trial stage type");
+		segmentList.add(new Segment(stageId, location , averageGradient, length, type));
+		for(int i=0; i<stageList.get(stageId).getSegmentList().size(); i++) {
+			if(segmentList.get(stageList.get(stageId).getSegmentList().get(i)).getLocation()  > segmentList.get(segmentList.size()-1).getLocation()) {
+				stageList.get(stageId).getSegmentList().add(i,(segmentList.size()-1));
+			}
 		}
-		segmentList.add(new MountainSegment(stageId, location , type , averageGradient , length));
 		return segmentList.size()-1;
 	}
 
@@ -91,8 +93,14 @@ public class CyclingPortal implements CyclingPortalInterface {
 		if(stageList.get(stageId).getStageType() == StageType.TT) {
 			throw new InvalidStageTypeException("Cannot add segements to time trial stage type");
 		}
+		segmentList.add(new Segment(stageId, location));
 		
-		return 0;
+		for(int i=0; i<stageList.get(stageId).getSegmentList().size(); i++) {
+			if(segmentList.get(stageList.get(stageId).getSegmentList().get(i)).getLocation()  > segmentList.get(segmentList.size()-1).getLocation()) {
+				stageList.get(stageId).getSegmentList().add(i,(segmentList.size()-1));
+			}
+		}
+		return segmentList.size()-1;
 	}
 
 	@Override
@@ -108,8 +116,7 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public int[] getStageSegments(int stageId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return null;
+		return stageList.get(stageId).getSegmentList().stream().mapToInt(i -> i).toArray();
 	}
 
 	@Override

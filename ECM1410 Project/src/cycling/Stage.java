@@ -2,8 +2,11 @@ package cycling;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class Stage {
+	ArrayList<Integer> segmentIdList = new ArrayList<>();
+	
 	private int raceId;
 	
 	public int getRaceId() {
@@ -57,10 +60,19 @@ public class Stage {
 		this.stageLength = length;
 		this.stageStartTime = startTime;
 		this.stageType = type;
-		this.setConcluded(false);
+		this.setIsConcluded(false);
 	}
-
 	
+	public void setSegmentList(int segmentId) {
+		for(int i = 0; i< segmentIdList.size(); i++) {
+			if(segmentIdList.get(i) == segmentId) {
+				segmentIdList.set(i, null);
+				break;
+			}
+		}
+	}
+	
+	public ArrayList<Integer> getSegmentList() {return segmentIdList;}
 	
 	
 }
