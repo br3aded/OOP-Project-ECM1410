@@ -71,21 +71,30 @@ public class CyclingPortal implements CyclingPortalInterface {
 	@Override
 	public void removeStageById(int stageId) throws IDNotRecognisedException {
 		// TODO Auto-generated method stub
-
-	}
+		if(stageList.get(stageId).getSegmentList().size() != 0) {
+			for(int i=0; i<stageList.get(stageId).getSegmentList().size(); i++) {
+				if (segmentList.get(stageList.get(stageId).getSegmentList().get(i)).getLocation()  > segmentList.get(segmentList.size()-1).getLocation()) {
+					stageList.get(stageId).getSegmentList().add(i,(segmentList.size()-1));
+					}
+				}
+			}	
+		}
 
 	@Override
 	public int addCategorizedClimbToStage(int stageId, Double location, SegmentType type, Double averageGradient,
 			Double length) throws IDNotRecognisedException, InvalidLocationException, InvalidStageStateException,
 			InvalidStageTypeException {
 		segmentList.add(new Segment(stageId, location , averageGradient, length, type));
-		for(int i=0; i<stageList.get(stageId).getSegmentList().size(); i++) {
-			if(segmentList.get(stageList.get(stageId).getSegmentList().get(i)).getLocation()  > segmentList.get(segmentList.size()-1).getLocation()) {
-				stageList.get(stageId).getSegmentList().add(i,(segmentList.size()-1));
-			}
-		}
+		if(stageList.get(stageId).getSegmentList().size() != 0) {
+			for(int i=0; i<stageList.get(stageId).getSegmentList().size(); i++) {
+				if (segmentList.get(stageList.get(stageId).getSegmentList().get(i)).getLocation()  > segmentList.get(segmentList.size()-1).getLocation()) {
+					stageList.get(stageId).getSegmentList().add(i,(segmentList.size()-1));
+					}
+				}
+			}	else {stageList.get(stageId).getSegmentList().add(0,(segmentList.size()-1));}
 		return segmentList.size()-1;
-	}
+		}
+
 
 	@Override
 	public int addIntermediateSprintToStage(int stageId, double location) throws IDNotRecognisedException,
@@ -94,14 +103,15 @@ public class CyclingPortal implements CyclingPortalInterface {
 			throw new InvalidStageTypeException("Cannot add segements to time trial stage type");
 		}
 		segmentList.add(new Segment(stageId, location));
-		
-		for(int i=0; i<stageList.get(stageId).getSegmentList().size(); i++) {
-			if(segmentList.get(stageList.get(stageId).getSegmentList().get(i)).getLocation()  > segmentList.get(segmentList.size()-1).getLocation()) {
-				stageList.get(stageId).getSegmentList().add(i,(segmentList.size()-1));
-			}
-		}
+		if(stageList.get(stageId).getSegmentList().size() != 0) {
+			for(int i=0; i<stageList.get(stageId).getSegmentList().size(); i++) {
+				if (segmentList.get(stageList.get(stageId).getSegmentList().get(i)).getLocation()  > segmentList.get(segmentList.size()-1).getLocation()) {
+					stageList.get(stageId).getSegmentList().add(i,(segmentList.size()-1));
+					}
+				}
+			}	else {stageList.get(stageId).getSegmentList().add(0,(segmentList.size()-1));}
 		return segmentList.size()-1;
-	}
+		}
 
 	@Override
 	public void removeSegment(int segmentId) throws IDNotRecognisedException, InvalidStageStateException {
