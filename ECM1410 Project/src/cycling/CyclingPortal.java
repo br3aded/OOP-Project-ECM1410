@@ -28,14 +28,41 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public int createRace(String name, String description) throws IllegalNameException, InvalidNameException {
+		if((name==null) || (name.trim()=="")) {
+			throw new InvalidNameException("A races name cannot be either null,empty, or whitespace");
+			}
+			if(name.trim().length()>30)
+			{
+			throw new InvalidNameException("A races name must be less then 30 characters");
+			}
+			if(name.contains(" "))
+			{
+			throw new InvalidNameException("A races name cannot contain spaces");
+			}
+			for(int i=0;i<raceList.size();i=i+1)
+			{
+			if(name==raceList.get(i).getRaceName())
+			{
+			throw new IllegalNameException("This name is used for another race");
+			}
+			}
 		raceList.add(new Race(name,description));// add functionality for filling in the gaps
 		return raceList.size() -1; // change functionality when filling in gaps
 	}
 
 	@Override
 	public String viewRaceDetails(int raceId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return null;
+		if((raceId>raceList.size()) || (raceList.get(raceId)==null))
+		{
+		throw new IDNotRecognisedException("This raceID does not exist");
+		}
+		int numberOfStage = raceList.get(raceId).getStageList().size();
+		int totalLength = 0;
+		for(int i=0; i<raceList.get(raceId).getStageList().size(); i++) {
+			totalLength += stageList.get(raceList.get(raceId).getStageList().get(i)).getStageLength();
+		}
+		return "[RaceId= "+ raceId + " ,Descripiton= " + raceList.get(raceId).getRaceDescription() + " ,number of stages= " +numberOfStage + " ,total length= " + totalLength + "]";
+		
 	}
 
 	@Override
@@ -206,7 +233,12 @@ public class CyclingPortal implements CyclingPortalInterface {
 	public void registerRiderResultsInStage(int stageId, int riderId, LocalTime... checkpoints)
 			throws IDNotRecognisedException, DuplicatedResultException, InvalidCheckpointsException,
 			InvalidStageStateException {
-		// TODO Auto-generated method stub
+		if(stageList.get(stageId).getIsConcluded() == true) {
+			if(stageList.get(stageId).getStageResults().get(riderId).length == 0) {
+				stageList.get(stageId).getStageResults().add(0,checkpoints);
+			}else {stageList.get(stageId).getStageResults().add(riderId,checkpoints);}
+			
+		}else {throw new InvalidStageStateException("Stage state hasnt been concluded");}
 
 	}
 

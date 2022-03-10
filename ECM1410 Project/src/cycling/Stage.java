@@ -3,9 +3,11 @@ package cycling;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Stage {
-	ArrayList<Integer> segmentIdList = new ArrayList<>();
+	ArrayList<Integer> segmentIdList;
+	ArrayList<LocalTime[]> stageResults;
 	
 	private int raceId;
 	
@@ -60,6 +62,8 @@ public class Stage {
 		this.stageLength = length;
 		this.stageStartTime = startTime;
 		this.stageType = type;
+		this.segmentIdList = new ArrayList<Integer>();
+		this.stageResults = new ArrayList<>();
 		this.setIsConcluded(false);
 	}
 	
@@ -74,5 +78,5 @@ public class Stage {
 	
 	public ArrayList<Integer> getSegmentList() {return segmentIdList;}
 	
-	
+	public ArrayList<LocalTime[]> getStageResults(){return stageResults;}
 }
