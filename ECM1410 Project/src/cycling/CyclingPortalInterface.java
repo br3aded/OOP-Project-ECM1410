@@ -25,7 +25,7 @@ public interface CyclingPortalInterface extends MiniCyclingPortalInterface {
 	 * @throws NameNotRecognisedException If the name does not match to any race in
 	 *                                    the system.
 	 */
-	void removeRaceByName(String name) throws NameNotRecognisedException;
+	void removeRaceByName(String name) throws NameNotRecognisedException, IDNotRecognisedException;
 
 	/**
 	 * Get the general classification rank of riders in a race.

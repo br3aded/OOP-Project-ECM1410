@@ -82,16 +82,18 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public void removeRaceById(int raceId) throws IDNotRecognisedException {
-		for(int i=0; i<raceList.get(raceId).getStageList().size();i++) {
-			for(int j=0; j<stageList.get(raceList.get(raceId).getStageList().get(i)).getSegmentList().size(); j++) {
-				segmentList.set(stageList.get(raceList.get(raceId).getStageList().get(i)).getSegmentList().get(j), null);
+		if(raceList.get(raceId) != null) {
+			for(int i=0; i<raceList.get(raceId).getStageList().size();i++) {
+				for(int j=0; j<stageList.get(raceList.get(raceId).getStageList().get(i)).getSegmentList().size(); j++) {
+					segmentList.set(stageList.get(raceList.get(raceId).getStageList().get(i)).getSegmentList().get(j), null);
+				}
 			}
-		}
-		for(int i=0 ; i< raceList.get(raceId).getStageList().size(); i++) {
-			stageList.set(raceList.get(raceId).getStageList().get(i),null);
-		}
-		
-		raceList.set(raceId, null);
+			for(int i=0 ; i< raceList.get(raceId).getStageList().size(); i++) {
+				stageList.set(raceList.get(raceId).getStageList().get(i),null);
+			}
+			
+			raceList.set(raceId, null);
+		} else {throw new IDNotRecognisedException("This raceID does not exist");}
 	}
 
 	@Override
@@ -432,7 +434,16 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public void removeRaceByName(String name) throws NameNotRecognisedException {
-		// TODO Auto-generated method stub
+		for(int i = 0; i< raceList.size(); i++) {
+			if(raceList.get(i).getRaceName() == name) {
+				try {
+					removeRaceById(i);
+				} catch (IDNotRecognisedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 
 	}
 
