@@ -356,28 +356,30 @@ public class CyclingPortal implements CyclingPortalInterface {
 		} else {
 			for(int j = 0; j < (((LocalTime[])stageList.get(stageId).getStageResults().get(0).get(0)).length-1); j++) {
 				ArrayList<ArrayList<Object>> tempSegSort = new ArrayList<>();
-				if(tempSegSort.size() == 0) {
-					tempSegSort.get(0).add(0,stageList.get(stageId).getStageResults().get(0).get(0));
-					tempSegSort.get(0).add(1,stageList.get(stageId).getStageResults().get(0).get(1));
-				}else {
-					for(int i = 0; i<stageList.get(stageId).getStageResults().size(); i++) {
-						for(int z =0 ; z< tempSegSort.size();z++) {
-							LocalTime[] tempCurrentSort = (LocalTime[])stageList.get(stageId).getStageResults().get(i).get(0);
-							LocalTime[] tempListSort = (LocalTime[])tempSegSort.get(z).get(0);
-							if(((LocalTime)(tempListSort[i])).isBefore((LocalTime)tempCurrentSort[i]) == true){
-								tempSegSort.get(z).add(0,stageList.get(stageId).getStageResults().get(0).get(0));
-								tempSegSort.get(z).add(1,stageList.get(stageId).getStageResults().get(0).get(1));
-								break;
+				if(segmentList.get(stageList.get(stageId).getSegmentList().get(j)).getType() == SegmentType.SPRINT) {
+					if(tempSegSort.size() == 0) {
+						tempSegSort.get(0).add(0,stageList.get(stageId).getStageResults().get(0).get(0));
+						tempSegSort.get(0).add(1,stageList.get(stageId).getStageResults().get(0).get(1));
+					}else {
+						for(int i = 0; i<stageList.get(stageId).getStageResults().size(); i++) {
+							for(int z =0 ; z< tempSegSort.size();z++) {
+								LocalTime[] tempCurrentSort = (LocalTime[])stageList.get(stageId).getStageResults().get(i).get(0);
+								LocalTime[] tempListSort = (LocalTime[])tempSegSort.get(z).get(0);
+								if(((LocalTime)(tempListSort[i])).isBefore((LocalTime)tempCurrentSort[i]) == true){
+									tempSegSort.get(z).add(0,stageList.get(stageId).getStageResults().get(0).get(0));
+									tempSegSort.get(z).add(1,stageList.get(stageId).getStageResults().get(0).get(1));
+									break;
+								}
 							}
 						}
 					}
-				}
-				int[] tempRidersRanked  =new int[tempSegSort.size()-1];
-				for(int i = 0; i < tempSegSort.size(); i++) {
-					tempRidersRanked[i] = (Integer)tempSegSort.get(i).get(1);
-				}
-				for(int i = 0; i<tempRidersRanked.length ; i++) {
-					ridersPointsInStage[i] += SPRINTSEGMENTSCORE[Arrays.binarySearch(tempRidersRanked, riderPosition[i])];
+					int[] tempRidersRanked  =new int[tempSegSort.size()-1];
+					for(int i = 0; i < tempSegSort.size(); i++) {
+						tempRidersRanked[i] = (Integer)tempSegSort.get(i).get(1);
+					}
+					for(int i = 0; i<tempRidersRanked.length ; i++) {
+						ridersPointsInStage[i] += SPRINTSEGMENTSCORE[Arrays.binarySearch(tempRidersRanked, riderPosition[i])];
+					}
 				}
 			}
 		if(stageList.get(stageId).getStageType() == StageType.FLAT){
