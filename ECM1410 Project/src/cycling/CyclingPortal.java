@@ -1,8 +1,11 @@
 package cycling;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -234,9 +237,21 @@ public class CyclingPortal implements CyclingPortalInterface {
 			throws IDNotRecognisedException, DuplicatedResultException, InvalidCheckpointsException,
 			InvalidStageStateException {
 		if(stageList.get(stageId).getIsConcluded() == true) {
-			if(stageList.get(stageId).getStageResults().get(riderId).length == 0) {
-				stageList.get(stageId).getStageResults().add(0,checkpoints);
-			}else {stageList.get(stageId).getStageResults().add(riderId,checkpoints);}
+			if(stageList.get(stageId).getStageResults().size() == 0) {
+				stageList.get(stageId).getStageResults().get(0).add(0,checkpoints);
+				stageList.get(stageId).getStageResults().get(0).add(1,riderId);
+			}else {
+				LocalTime tempCheckpointsElapsedTime = LocalTime.of(checkpoints[checkpoints.length-1].getHour()-checkpoints[0].getHour(),checkpoints[checkpoints.length-1].getMinute()-checkpoints[0].getMinute(),checkpoints[checkpoints.length-1].getSecond()-checkpoints[0].getSecond(),checkpoints[checkpoints.length-1].getNano()-checkpoints[0].getNano());
+				for(int i = 0; i<stageList.get(stageId).getStageResults().size(); i++) {
+					LocalTime[] tempCheckpoints = (LocalTime[]) stageList.get(stageId).getStageResults().get(i).get(0);
+					LocalTime tempElapsedTime = LocalTime.of(tempCheckpoints[tempCheckpoints.length-1].getHour()-tempCheckpoints[0].getHour(),tempCheckpoints[tempCheckpoints.length-1].getMinute()-tempCheckpoints[0].getMinute(),tempCheckpoints[tempCheckpoints.length-1].getSecond()-tempCheckpoints[0].getSecond(),tempCheckpoints[tempCheckpoints.length-1].getNano()-tempCheckpoints[0].getNano());
+					if(tempCheckpointsElapsedTime.isBefore(tempElapsedTime)){
+						stageList.get(stageId).getStageResults().get(i).add(0,checkpoints);
+						stageList.get(stageId).getStageResults().get(i).add(1,riderId);
+						break;
+					}
+				}
+			}
 			
 		}else {throw new InvalidStageStateException("Stage state hasnt been concluded");}
 
@@ -244,19 +259,57 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public LocalTime[] getRiderResultsInStage(int stageId, int riderId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public LocalTime getRiderAdjustedElapsedTimeInStage(int stageId, int riderId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return null;
+		for(int i = 0; i < stageList.get(stageId).getStageResults().size(); i++) {
+			if((Integer)stageList.get(stageId).getStageResults().get(i).get(1) == riderId) {
+				break;
+			}else if(i == stageList.get(stageId).getStageResults().size()-1){
+				return null;
+			}
+			
+		}
+		int positionInStageResults = 0;
+		for(int i = 0; i < stageList.get(stageId).getStageResults().size(); i++) {
+			if((Integer)stageList.get(stageId).getStageResults().get(i).get(1) == riderId) {
+				positionInStageResults = i;
+				break;
+			}
+		}
+		
+		LocalTime currentElapsedTime = LocalTime.of(0,0);
+		for(int i = positionInStageResults; i>0 ;i--) {
+			LocalTime[] checkpointsCurrent = (LocalTime[])stageList.get(stageId).getStageResults().get(i).get(0);
+			LocalTime[] checkpointsBelow = (LocalTime[])stageList.get(stageId).getStageResults().get(i-1).get(0);
+			if((checkpointsCurrent[checkpointsCurrent.length-1].getHour() - checkpointsCurrent[0].getHour()) == (checkpointsBelow[checkpointsBelow.length-1].getHour() - checkpointsBelow[0].getHour())) {
+				if((checkpointsCurrent[checkpointsCurrent.length-1].getMinute() - checkpointsCurrent[0].getMinute()) == (checkpointsBelow[checkpointsBelow.length-1].getMinute() - checkpointsBelow[0].getMinute())) {
+					if((checkpointsCurrent[checkpointsCurrent.length-1].getSecond() - checkpointsCurrent[0].getSecond()) == (checkpointsBelow[checkpointsBelow.length-1].getSecond() - checkpointsBelow[0].getSecond()+1)) {
+						if(((checkpointsCurrent[checkpointsCurrent.length-1].getNano() - checkpointsCurrent[0].getNano()) - (checkpointsBelow[checkpointsBelow.length-1].getNano() - checkpointsBelow[0].getNano())) < 5000000 ){
+							currentElapsedTime = LocalTime.of(checkpointsBelow[checkpointsBelow.length-1].getHour()-checkpointsBelow[0].getHour(),checkpointsBelow[checkpointsBelow.length-1].getMinute()-checkpointsBelow[0].getMinute(),checkpointsBelow[checkpointsBelow.length-1].getSecond()-checkpointsBelow[0].getSecond(),checkpointsBelow[checkpointsBelow.length-1].getNano()-checkpointsBelow[0].getNano());
+						} else if(((checkpointsBelow[checkpointsBelow.length-1].getNano() - checkpointsBelow[0].getNano()) - (checkpointsCurrent[checkpointsCurrent.length-1].getNano() - checkpointsCurrent[0].getNano())) < 5000000 ){
+							currentElapsedTime = LocalTime.of(checkpointsBelow[checkpointsBelow.length-1].getHour()-checkpointsBelow[0].getHour(),checkpointsBelow[checkpointsBelow.length-1].getMinute()-checkpointsBelow[0].getMinute(),checkpointsBelow[checkpointsBelow.length-1].getSecond()-checkpointsBelow[0].getSecond(),checkpointsBelow[checkpointsBelow.length-1].getNano()-checkpointsBelow[0].getNano());
+						}
+					}
+				} else if((checkpointsCurrent[checkpointsCurrent.length-1].getSecond() - checkpointsCurrent[0].getSecond()) == (checkpointsBelow[checkpointsBelow.length-1].getMinute() - checkpointsBelow[0].getMinute())) {
+					currentElapsedTime = LocalTime.of(checkpointsBelow[checkpointsBelow.length-1].getHour()-checkpointsBelow[0].getHour(),checkpointsBelow[checkpointsBelow.length-1].getMinute()-checkpointsBelow[0].getMinute(),checkpointsBelow[checkpointsBelow.length-1].getSecond()-checkpointsBelow[0].getSecond(),checkpointsBelow[checkpointsBelow.length-1].getNano()-checkpointsBelow[0].getNano());
+				}
+			}
+
+		}
+		return currentElapsedTime;
 	}
 
 	@Override
 	public void deleteRiderResultsInStage(int stageId, int riderId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
+		for(int i = 0; i< stageList.get(stageId).getStageResults().size(); i++) {
+			if((Integer)stageList.get(stageId).getStageResults().get(i).get(1) == riderId ) {
+				stageList.get(stageId).getStageResults().remove(i);
+				break;
+			}
+		}
 
 	}
 

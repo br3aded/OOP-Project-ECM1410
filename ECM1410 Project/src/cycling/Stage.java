@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Stage {
 	ArrayList<Integer> segmentIdList;
-	ArrayList<LocalTime[]> stageResults;
+	@SuppressWarnings("rawtypes")
+	ArrayList<ArrayList<Object>> stageResults;
 	
 	private int raceId;
 	
@@ -53,6 +54,7 @@ public class Stage {
 
 	public void setIsConcluded(boolean isConcluded) {
 		this.isConcluded = isConcluded;
+		this.stageResults = new ArrayList<>();
 	}
 	
 	public Stage(int raceId, String stageName, String description, double length, LocalDateTime startTime,StageType type) {
@@ -63,7 +65,6 @@ public class Stage {
 		this.stageStartTime = startTime;
 		this.stageType = type;
 		this.segmentIdList = new ArrayList<Integer>();
-		this.stageResults = new ArrayList<>();
 		this.setIsConcluded(false);
 	}
 	
@@ -78,5 +79,5 @@ public class Stage {
 	
 	public ArrayList<Integer> getSegmentList() {return segmentIdList;}
 	
-	public ArrayList<LocalTime[]> getStageResults(){return stageResults;}
+	public ArrayList<ArrayList<Object>> getStageResults(){return stageResults;}
 }
