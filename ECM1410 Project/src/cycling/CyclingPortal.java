@@ -17,6 +17,18 @@ public class CyclingPortal implements CyclingPortalInterface {
 	ArrayList<Stage> stageList = new ArrayList<Stage>();
 	ArrayList<Segment> segmentList = new ArrayList<>();
 	
+	final int[] FLATSTAGESCORE = {50,30,20,18,16,14,12,10,8,7,6,5,4,3,2,0};
+	final int[] MEDIUMSTAGESCORE = {30,25,22,19,17,15,13,11,9,7,6,5,4,3,2,0};
+	final int[] HIGHSTAGESCORE = {20,17,15,13,11,10,9,8,7,6,5,4,3,2,1,0};
+	final int[] TTSTAGESCORE = {20,17,15,13,11,10,9,8,7,6,5,4,3,2,1,0};
+	final int[] SPRINTSEGMENTSCORE = {20,17,15,13,11,10,9,8,7,6,5,4,3,2,1,0};
+	final int[] FOURCSCORE = {1,0};
+	final int[] THREECSCORE = {2,1,0};
+	final int[] TWOCSCORE = {5,3,2,1,0};
+	final int[] ONECSCORE = {10,8,6,4,2,1};
+	final int[] HCSCORE = {20,15,12,10,8,6,4,2};
+	
+
 	@Override
 	public int[] getRaceIds() {
 		ArrayList<Integer> tempRaceIdList = new ArrayList<Integer>();
@@ -248,7 +260,6 @@ public class CyclingPortal implements CyclingPortalInterface {
 					if(tempCheckpointsElapsedTime.isBefore(tempElapsedTime)){
 						stageList.get(stageId).getStageResults().get(i).add(0,checkpoints);
 						stageList.get(stageId).getStageResults().get(i).add(1,riderId);
-						break;
 					}
 				}
 			}
@@ -307,20 +318,90 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public int[] getRidersRankInStage(int stageId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return null;
+		int[] ridersRanked;
+		if(stageList.get(stageId).getStageResults().size()!=0) {
+			ridersRanked  =new int[stageList.get(stageId).getStageResults().size()-1];
+			for(int i = 0; i < stageList.get(stageId).getStageResults().size(); i++) {
+				ridersRanked[i] = (Integer)stageList.get(stageId).getStageResults().get(i).get(1);
+			}
+		}else {
+	return new int[0];}
+		
+	return ridersRanked;
+	
 	}
 
 	@Override
 	public LocalTime[] getRankedAdjustedElapsedTimesInStage(int stageId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return null;
+		LocalTime[] rankedElapsedTime;
+		if(stageList.get(stageId).getStageResults().size()!=0) {
+			rankedElapsedTime = new LocalTime[stageList.get(stageId).getStageResults().size()-1];
+			for(int i = 0 ; i<stageList.get(stageId).getStageResults().size(); i++) {
+				rankedElapsedTime[i] = getRiderAdjustedElapsedTimeInStage(stageId, (Integer)stageList.get(stageId).getStageResults().get(i).get(1));
+			}
+		} else {return new LocalTime[0];}
+		return rankedElapsedTime;
 	}
 
 	@Override
 	public int[] getRidersPointsInStage(int stageId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return null;
+		int[] riderPosition = getRidersRankInStage(stageId);
+		int[] ridersPointsInStage = new int[stageList.get(stageId).getStageResults().size()-1];
+		if(stageList.get(stageId).getStageResults().size() !=0)
+		if(stageList.get(stageId).getStageType() == StageType.TT ) {
+			for(int i = 0; i<stageList.get(stageId).getStageResults().size() ; i++) {
+				ridersPointsInStage[i]= TTSTAGESCORE[i];
+				return ridersPointsInStage;
+			}
+		} else {
+			for(int j = 0; j < (((LocalTime[])stageList.get(stageId).getStageResults().get(0).get(0)).length-1); j++) {
+				ArrayList<ArrayList<Object>> tempSegSort = new ArrayList<>();
+				if(tempSegSort.size() == 0) {
+					tempSegSort.get(0).add(0,stageList.get(stageId).getStageResults().get(0).get(0));
+					tempSegSort.get(0).add(1,stageList.get(stageId).getStageResults().get(0).get(1));
+				}else {
+					for(int i = 0; i<stageList.get(stageId).getStageResults().size(); i++) {
+						for(int z =0 ; z< tempSegSort.size();z++) {
+							LocalTime[] tempCurrentSort = (LocalTime[])stageList.get(stageId).getStageResults().get(i).get(0);
+							LocalTime[] tempListSort = (LocalTime[])tempSegSort.get(z).get(0);
+							if(((LocalTime)(tempListSort[i])).isBefore((LocalTime)tempCurrentSort[i]) == true){
+								tempSegSort.get(z).add(0,stageList.get(stageId).getStageResults().get(0).get(0));
+								tempSegSort.get(z).add(1,stageList.get(stageId).getStageResults().get(0).get(1));
+								break;
+							}
+						}
+					}
+				}
+				int[] tempRidersRanked  =new int[tempSegSort.size()-1];
+				for(int i = 0; i < tempSegSort.size(); i++) {
+					tempRidersRanked[i] = (Integer)tempSegSort.get(i).get(1);
+				}
+				for(int i = 0; i<tempRidersRanked.length ; i++) {
+					ridersPointsInStage[i] += SPRINTSEGMENTSCORE[Arrays.binarySearch(tempRidersRanked, riderPosition[i])];
+				}
+			}
+		if(stageList.get(stageId).getStageType() == StageType.FLAT){
+			for(int i = 0; i<stageList.get(stageId).getStageResults().size() ; i++) {
+				if(i < FLATSTAGESCORE.length) {
+					ridersPointsInStage[i] += FLATSTAGESCORE[i];
+					}
+				}
+			}else if(stageList.get(stageId).getStageType() == StageType.MEDIUM_MOUNTAIN){
+			for(int i = 0; i<stageList.get(stageId).getStageResults().size() ; i++) {
+				if(i<MEDIUMSTAGESCORE.length) {
+				ridersPointsInStage[i] += MEDIUMSTAGESCORE[i];
+				}
+			}
+		}else if(stageList.get(stageId).getStageType() == StageType.HIGH_MOUNTAIN) {
+			for(int i = 0; i<stageList.get(stageId).getStageResults().size() ; i++) {
+				if(i<HIGHSTAGESCORE.length) {
+			ridersPointsInStage[i] += HIGHSTAGESCORE[i];
+				}
+			}
+		}
+		
+		}
+		return ridersPointsInStage;
 	}
 
 	@Override
