@@ -280,26 +280,18 @@ public class CyclingPortal implements CyclingPortalInterface {
 			}
 		}
 		
-		LocalTime currentElapsedTime = LocalTime.of(0,0);
+		LocalTime[] currentElapsedTime = null;
 		for(int i = positionInStageResults; i>0 ;i--) {
 			LocalTime[] checkpointsCurrent = (LocalTime[])stageList.get(stageId).getStageResults().get(i).get(0);
 			LocalTime[] checkpointsBelow = (LocalTime[])stageList.get(stageId).getStageResults().get(i-1).get(0);
-			if((checkpointsCurrent[checkpointsCurrent.length-1].getHour() - checkpointsCurrent[0].getHour()) == (checkpointsBelow[checkpointsBelow.length-1].getHour() - checkpointsBelow[0].getHour())) {
-				if((checkpointsCurrent[checkpointsCurrent.length-1].getMinute() - checkpointsCurrent[0].getMinute()) == (checkpointsBelow[checkpointsBelow.length-1].getMinute() - checkpointsBelow[0].getMinute())) {
-					if((checkpointsCurrent[checkpointsCurrent.length-1].getSecond() - checkpointsCurrent[0].getSecond()) == (checkpointsBelow[checkpointsBelow.length-1].getSecond() - checkpointsBelow[0].getSecond()+1)) {
-						if(((checkpointsCurrent[checkpointsCurrent.length-1].getNano() - checkpointsCurrent[0].getNano()) - (checkpointsBelow[checkpointsBelow.length-1].getNano() - checkpointsBelow[0].getNano())) < 5000000 ){
-							currentElapsedTime = LocalTime.of(checkpointsBelow[checkpointsBelow.length-1].getHour()-checkpointsBelow[0].getHour(),checkpointsBelow[checkpointsBelow.length-1].getMinute()-checkpointsBelow[0].getMinute(),checkpointsBelow[checkpointsBelow.length-1].getSecond()-checkpointsBelow[0].getSecond(),checkpointsBelow[checkpointsBelow.length-1].getNano()-checkpointsBelow[0].getNano());
-						} else if(((checkpointsBelow[checkpointsBelow.length-1].getNano() - checkpointsBelow[0].getNano()) - (checkpointsCurrent[checkpointsCurrent.length-1].getNano() - checkpointsCurrent[0].getNano())) < 5000000 ){
-							currentElapsedTime = LocalTime.of(checkpointsBelow[checkpointsBelow.length-1].getHour()-checkpointsBelow[0].getHour(),checkpointsBelow[checkpointsBelow.length-1].getMinute()-checkpointsBelow[0].getMinute(),checkpointsBelow[checkpointsBelow.length-1].getSecond()-checkpointsBelow[0].getSecond(),checkpointsBelow[checkpointsBelow.length-1].getNano()-checkpointsBelow[0].getNano());
-						}
-					}
-				} else if((checkpointsCurrent[checkpointsCurrent.length-1].getSecond() - checkpointsCurrent[0].getSecond()) == (checkpointsBelow[checkpointsBelow.length-1].getMinute() - checkpointsBelow[0].getMinute())) {
-					currentElapsedTime = LocalTime.of(checkpointsBelow[checkpointsBelow.length-1].getHour()-checkpointsBelow[0].getHour(),checkpointsBelow[checkpointsBelow.length-1].getMinute()-checkpointsBelow[0].getMinute(),checkpointsBelow[checkpointsBelow.length-1].getSecond()-checkpointsBelow[0].getSecond(),checkpointsBelow[checkpointsBelow.length-1].getNano()-checkpointsBelow[0].getNano());
-				}
+			if(checkpointsCurrent[checkpointsCurrent.length-1].minusSeconds(1).isBefore(checkpointsBelow[checkpointsBelow.length-1])) {
+				currentElapsedTime = checkpointsBelow;
+			}else {
+				break;
 			}
 
 		}
-		return currentElapsedTime;
+		return LocalTime.of(currentElapsedTime[currentElapsedTime.length-1].getHour()-currentElapsedTime[0].getHour(),currentElapsedTime[currentElapsedTime.length-1].getMinute()-currentElapsedTime[0].getMinute(),currentElapsedTime[currentElapsedTime.length-1].getSecond()-currentElapsedTime[0].getSecond(),currentElapsedTime[currentElapsedTime.length-1].getNano()-currentElapsedTime[0].getNano());
 	}
 
 	@Override
