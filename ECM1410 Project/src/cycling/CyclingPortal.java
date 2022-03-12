@@ -260,8 +260,12 @@ public class CyclingPortal implements CyclingPortalInterface {
 					LocalTime[] tempCheckpoints = (LocalTime[]) stageList.get(stageId).getStageResults().get(i).get(0);
 					LocalTime tempElapsedTime = LocalTime.of(tempCheckpoints[tempCheckpoints.length-1].getHour()-tempCheckpoints[0].getHour(),tempCheckpoints[tempCheckpoints.length-1].getMinute()-tempCheckpoints[0].getMinute(),tempCheckpoints[tempCheckpoints.length-1].getSecond()-tempCheckpoints[0].getSecond(),tempCheckpoints[tempCheckpoints.length-1].getNano()-tempCheckpoints[0].getNano());
 					if(tempCheckpointsElapsedTime.isBefore(tempElapsedTime)){
-						stageList.get(stageId).getStageResults().get(i).add(0,checkpoints);
-						stageList.get(stageId).getStageResults().get(i).add(1,riderId);
+						ArrayList<Object> tempArrayList = new ArrayList<>();
+						tempArrayList.add(checkpoints);
+						tempArrayList.add(riderId);
+						stageList.get(stageId).getStageResults().add(i,tempArrayList);
+						//stageList.get(stageId).getStageResults().get(i).add(0,checkpoints); keeping here incase this was correct
+						//stageList.get(stageId).getStageResults().get(i).add(1,riderId);
 					}
 				}
 			}
@@ -500,57 +504,306 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public LocalTime[] getGeneralClassificationTimesInRace(int raceId) throws IDNotRecognisedException {
-		ArrayList<ArrayList<Object>> tempTotalElapsedTime=  new ArrayList<>();
-		for(int i = 0; i< raceList.get(raceId).getStageList().size(); i++) {
-			LocalTime[] tempElapsedTime = getRankedAdjustedElapsedTimesInStage(raceList.get(raceId).getStageList().get(i));
-			int[] tempRiderId = getRidersRankInStage(raceList.get(raceId).getStageList().get(i));
-			if(tempTotalElapsedTime.size() == 0) {
-				for(int j = 0; j < tempElapsedTime.length; j++) {
-					tempTotalElapsedTime.get(0).add(0,tempElapsedTime[j]);
-					tempTotalElapsedTime.get(0).add(1,tempRiderId[j]);
-				}
-			}else {
-				for(int j=0; j< tempElapsedTime.length;j++) {
-					for(int z=0; z<tempElapsedTime.length; z++) {
-						if(tempRiderId[j] == (Integer)tempTotalElapsedTime.get(z).get(i)) {
-							// change this to work out elapsed time
-							tempTotalElapsedTime.get(z).set(i,LocalTime.of(currentElapsedTime[currentElapsedTime.length-1].getHour()-currentElapsedTime[0].getHour(),currentElapsedTime[currentElapsedTime.length-1].getMinute()-currentElapsedTime[0].getMinute(),currentElapsedTime[currentElapsedTime.length-1].getSecond()-currentElapsedTime[0].getSecond(),currentElapsedTime[currentElapsedTime.length-1].getNano()-currentElapsedTime[0].getNano());)
+		if(raceList.get(raceId).getStageList().size() != 0 ) {
+			ArrayList<ArrayList<Object>> tempTotalElapsedTime=  new ArrayList<>();
+			for(int i = 0; i< raceList.get(raceId).getStageList().size(); i++) { // iterates through each stage
+				LocalTime[] tempElapsedTime = getRankedAdjustedElapsedTimesInStage(raceList.get(raceId).getStageList().get(i));
+				int[] tempRiderId = getRidersRankInStage(raceList.get(raceId).getStageList().get(i));
+				if(tempTotalElapsedTime.size() == 0) {
+					for(int j = 0; j < tempElapsedTime.length; j++) {
+						tempTotalElapsedTime.get(0).add(0,tempElapsedTime[j]);
+						tempTotalElapsedTime.get(0).add(1,tempRiderId[j]);
+					}
+				}else {
+					for(int j=0; j< tempElapsedTime.length;j++) { // iterates through rider
+						for(int z=0; z<tempElapsedTime.length; z++) {// iterates through each item in temporary value to find correct location to add
+							if(tempRiderId[j] == (Integer)tempTotalElapsedTime.get(z).get(1)) {
+								// change this to work out elapsed time
+								tempTotalElapsedTime.get(z).set(i,LocalTime.of(tempElapsedTime[j].getHour()+(((LocalTime)tempTotalElapsedTime.get(z).get(0)).getHour()),tempElapsedTime[j].getMinute()+(((LocalTime)tempTotalElapsedTime.get(z).get(0)).getMinute()),tempElapsedTime[j].getSecond()+(((LocalTime)tempTotalElapsedTime.get(z).get(0)).getSecond()),tempElapsedTime[j].getNano()+(((LocalTime)tempTotalElapsedTime.get(z).get(0)).getNano())));
+							}
 						}
+					}
+				
+				// sort list by creating a new list and insert sorting
 				}
-			// sort list by creating a new list and insert sorting
+			
+	 		}
+			ArrayList<ArrayList<Object>> tempSortedTotalElapsedTime=  new ArrayList<>();
+			tempSortedTotalElapsedTime.get(0).add(0,tempTotalElapsedTime.get(0).get(0));
+			tempSortedTotalElapsedTime.get(0).add(1,tempTotalElapsedTime.get(0).get(0));
+			for(int i = 0; i<tempTotalElapsedTime.size(); i++) {// iterates through tempTotalElapsedTime
+				for(int j = 0; j<tempSortedTotalElapsedTime.size(); j++) {// iterates through tempSortedTotalElapsedTime
+					if(((LocalTime)tempSortedTotalElapsedTime.get(j).get(0)).isBefore((LocalTime)tempTotalElapsedTime.get(i).get(0)) == false) {
+						ArrayList<Object> tempArrayList = new ArrayList<>();
+						tempArrayList.add(0,tempTotalElapsedTime.get(i).get(0));
+						tempArrayList.add(1,tempTotalElapsedTime.get(i).get(1));
+						tempSortedTotalElapsedTime.add(j, tempArrayList);
+					}
+				}
 			}
- 		}
-		return null;
+			
+			LocalTime[] generalClassificationTimes = new LocalTime[tempSortedTotalElapsedTime.size()];
+			for(int i = 0; i < tempSortedTotalElapsedTime.size() ; i++) {
+				generalClassificationTimes[i] = (LocalTime)tempSortedTotalElapsedTime.get(i).get(0);
+			}
+			
+			return generalClassificationTimes;
+			
+		} 
+		return new LocalTime[0];
 	}
+		
 
 	@Override
 	public int[] getRidersPointsInRace(int raceId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return null;
+		if(raceList.get(raceId).getStageList().size() != 0 ) {
+			ArrayList<ArrayList<Object>> tempTotalPoints=  new ArrayList<>();
+			for(int i = 0; i< raceList.get(raceId).getStageList().size(); i++) { // iterates through each stage
+				int[] tempPoints = getRidersPointsInStage(raceList.get(raceId).getStageList().get(i));
+				int[] tempRiderId = getRidersRankInStage(raceList.get(raceId).getStageList().get(i));
+				if(tempTotalPoints.size() == 0) {
+					for(int j = 0; j < tempPoints.length; j++) {
+						tempTotalPoints.get(0).add(0,tempPoints[j]);
+						tempTotalPoints.get(0).add(1,tempRiderId[j]);
+					}
+				}else {
+					for(int j=0; j< tempPoints.length;j++) { // iterates through rider
+						for(int z=0; z<tempPoints.length; z++) {// iterates through each item in temporary value to find correct location to add
+							if(tempRiderId[j] == (Integer)tempTotalPoints.get(z).get(1)) {
+								// change this to work out elapsed time
+								tempTotalPoints.get(z).set(0,tempPoints[j]+(Integer)tempTotalPoints.get(z).get(0));
+							}
+						}
+					}
+				
+				// sort list by creating a new list and insert sorting
+				}
+			
+	 		}
+			ArrayList<ArrayList<Object>> tempSortedPoints=  new ArrayList<>();
+			tempSortedPoints.get(0).add(0,tempTotalPoints.get(0).get(0));
+			tempSortedPoints.get(0).add(1,tempTotalPoints.get(0).get(0));
+			for(int i = 0; i<tempTotalPoints.size(); i++) {// iterates through tempTotalElapsedTime
+				for(int j = 0; j<tempSortedPoints.size(); j++) {// iterates through tempSortedTotalElapsedTime
+					if(((Integer)tempSortedPoints.get(j).get(0)) < ((Integer)tempTotalPoints.get(i).get(0))) {
+						ArrayList<Object> tempArrayList = new ArrayList<>();
+						tempArrayList.add(0,tempTotalPoints.get(i).get(0));
+						tempArrayList.add(1,tempTotalPoints.get(i).get(1));
+						tempSortedPoints.add(j, tempArrayList);
+					}
+				}
+			}
+			
+			int[] generalRidersPoints = new int[tempSortedPoints.size()];
+			for(int i = 0; i < tempSortedPoints.size() ; i++) {
+				generalRidersPoints[i] = (int)tempSortedPoints.get(i).get(0);
+			}
+			
+			return generalRidersPoints;
+			
+		} 
+		return new int[0];
 	}
 
 	@Override
 	public int[] getRidersMountainPointsInRace(int raceId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return null;
+		if(raceList.get(raceId).getStageList().size() != 0 ) {
+			ArrayList<ArrayList<Object>> tempTotalMountainPoints=  new ArrayList<>();
+			for(int i = 0; i< raceList.get(raceId).getStageList().size(); i++) { // iterates through each stage
+				int[] tempMountainPoints = getRidersMountainPointsInStage(raceList.get(raceId).getStageList().get(i));
+				int[] tempRiderId = getRidersRankInStage(raceList.get(raceId).getStageList().get(i));
+				if(tempTotalMountainPoints.size() == 0) {
+					for(int j = 0; j < tempMountainPoints.length; j++) {
+						tempTotalMountainPoints.get(0).add(0,tempMountainPoints[j]);
+						tempTotalMountainPoints.get(0).add(1,tempRiderId[j]);
+					}
+				}else {
+					for(int j=0; j< tempMountainPoints.length;j++) { // iterates through rider
+						for(int z=0; z<tempMountainPoints.length; z++) {// iterates through each item in temporary value to find correct location to add
+							if(tempRiderId[j] == (Integer)tempTotalMountainPoints.get(z).get(1)) {
+								// change this to work out elapsed time
+								tempTotalMountainPoints.get(z).set(0,tempMountainPoints[j]+(Integer)tempTotalMountainPoints.get(z).get(0));
+							}
+						}
+					}
+				
+				// sort list by creating a new list and insert sorting
+				}
+			
+	 		}
+			ArrayList<ArrayList<Object>> tempSortedMountainPoints=  new ArrayList<>();
+			tempSortedMountainPoints.get(0).add(0,tempTotalMountainPoints.get(0).get(0));
+			tempSortedMountainPoints.get(0).add(1,tempTotalMountainPoints.get(0).get(0));
+			for(int i = 0; i<tempTotalMountainPoints.size(); i++) {// iterates through tempTotalElapsedTime
+				for(int j = 0; j<tempSortedMountainPoints.size(); j++) {// iterates through tempSortedTotalElapsedTime
+					if(((Integer)tempSortedMountainPoints.get(j).get(0)) < ((Integer)tempTotalMountainPoints.get(i).get(0))) {
+						ArrayList<Object> tempArrayList = new ArrayList<>();
+						tempArrayList.add(0,tempTotalMountainPoints.get(i).get(0));
+						tempArrayList.add(1,tempTotalMountainPoints.get(i).get(1));
+						tempSortedMountainPoints.add(j, tempArrayList);
+					}
+				}
+			}
+			
+			int[] generalRidersMountainPoints = new int[tempSortedMountainPoints.size()];
+			for(int i = 0; i < tempSortedMountainPoints.size() ; i++) {
+				generalRidersMountainPoints[i] = (int)tempSortedMountainPoints.get(i).get(0);
+			}
+			
+			return generalRidersMountainPoints;
+			
+		} 
+		return new int[0];
 	}
 
 	@Override
 	public int[] getRidersGeneralClassificationRank(int raceId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return null;
+		if(raceList.get(raceId).getStageList().size() != 0 ) {
+			ArrayList<ArrayList<Object>> tempTotalElapsedTime=  new ArrayList<>();
+			for(int i = 0; i< raceList.get(raceId).getStageList().size(); i++) { // iterates through each stage
+				LocalTime[] tempElapsedTime = getRankedAdjustedElapsedTimesInStage(raceList.get(raceId).getStageList().get(i));
+				int[] tempRiderId = getRidersRankInStage(raceList.get(raceId).getStageList().get(i));
+				if(tempTotalElapsedTime.size() == 0) {
+					for(int j = 0; j < tempElapsedTime.length; j++) {
+						tempTotalElapsedTime.get(0).add(0,tempElapsedTime[j]);
+						tempTotalElapsedTime.get(0).add(1,tempRiderId[j]);
+					}
+				}else {
+					for(int j=0; j< tempElapsedTime.length;j++) { // iterates through rider
+						for(int z=0; z<tempElapsedTime.length; z++) {// iterates through each item in temporary value to find correct location to add
+							if(tempRiderId[j] == (Integer)tempTotalElapsedTime.get(z).get(1)) {
+								// change this to work out elapsed time
+								tempTotalElapsedTime.get(z).set(i,LocalTime.of(tempElapsedTime[j].getHour()+(((LocalTime)tempTotalElapsedTime.get(z).get(0)).getHour()),tempElapsedTime[j].getMinute()+(((LocalTime)tempTotalElapsedTime.get(z).get(0)).getMinute()),tempElapsedTime[j].getSecond()+(((LocalTime)tempTotalElapsedTime.get(z).get(0)).getSecond()),tempElapsedTime[j].getNano()+(((LocalTime)tempTotalElapsedTime.get(z).get(0)).getNano())));
+							}
+						}
+					}
+				}
+	 		}
+			ArrayList<ArrayList<Object>> tempSortedTotalElapsedTime=  new ArrayList<>();
+			tempSortedTotalElapsedTime.get(0).add(0,tempTotalElapsedTime.get(0).get(0));
+			tempSortedTotalElapsedTime.get(0).add(1,tempTotalElapsedTime.get(0).get(0));
+			for(int i = 0; i<tempTotalElapsedTime.size(); i++) {// iterates through tempTotalElapsedTime
+				for(int j = 0; j<tempSortedTotalElapsedTime.size(); j++) {// iterates through tempSortedTotalElapsedTime
+					if(((LocalTime)tempSortedTotalElapsedTime.get(j).get(0)).isBefore((LocalTime)tempTotalElapsedTime.get(i).get(0)) == false) {
+						ArrayList<Object> tempArrayList = new ArrayList<>();
+						tempArrayList.add(0,tempTotalElapsedTime.get(i).get(0));
+						tempArrayList.add(1,tempTotalElapsedTime.get(i).get(1));
+						tempSortedTotalElapsedTime.add(j, tempArrayList);
+					}
+				}
+			}
+			
+			int[] generalClassificationRank = new int[tempSortedTotalElapsedTime.size()];
+			for(int i = 0; i < tempSortedTotalElapsedTime.size() ; i++) {
+				generalClassificationRank[i] = (Integer)tempSortedTotalElapsedTime.get(i).get(1);
+			}
+			
+			return generalClassificationRank;
+			
+		} 
+		return new int[0];
 	}
 
 	@Override
 	public int[] getRidersPointClassificationRank(int raceId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return null;
+		if(raceList.get(raceId).getStageList().size() != 0 ) {
+			ArrayList<ArrayList<Object>> tempTotalPoints=  new ArrayList<>();
+			for(int i = 0; i< raceList.get(raceId).getStageList().size(); i++) { // iterates through each stage
+				int[] tempPoints = getRidersPointsInStage(raceList.get(raceId).getStageList().get(i));
+				int[] tempRiderId = getRidersRankInStage(raceList.get(raceId).getStageList().get(i));
+				if(tempTotalPoints.size() == 0) {
+					for(int j = 0; j < tempPoints.length; j++) {
+						tempTotalPoints.get(0).add(0,tempPoints[j]);
+						tempTotalPoints.get(0).add(1,tempRiderId[j]);
+					}
+				}else {
+					for(int j=0; j< tempPoints.length;j++) { // iterates through rider
+						for(int z=0; z<tempPoints.length; z++) {// iterates through each item in temporary value to find correct location to add
+							if(tempRiderId[j] == (Integer)tempTotalPoints.get(z).get(1)) {
+								// change this to work out elapsed time
+								tempTotalPoints.get(z).set(0,tempPoints[j]+(Integer)tempTotalPoints.get(z).get(0));
+							}
+						}
+					}
+				
+				// sort list by creating a new list and insert sorting
+				}
+			
+	 		}
+			ArrayList<ArrayList<Object>> tempSortedPoints=  new ArrayList<>();
+			tempSortedPoints.get(0).add(0,tempTotalPoints.get(0).get(0));
+			tempSortedPoints.get(0).add(1,tempTotalPoints.get(0).get(0));
+			for(int i = 0; i<tempTotalPoints.size(); i++) {// iterates through tempTotalElapsedTime
+				for(int j = 0; j<tempSortedPoints.size(); j++) {// iterates through tempSortedTotalElapsedTime
+					if(((Integer)tempSortedPoints.get(j).get(0)) < ((Integer)tempTotalPoints.get(i).get(0))) {
+						ArrayList<Object> tempArrayList = new ArrayList<>();
+						tempArrayList.add(0,tempTotalPoints.get(i).get(0));
+						tempArrayList.add(1,tempTotalPoints.get(i).get(1));
+						tempSortedPoints.add(j, tempArrayList);
+					}
+				}
+			}
+			
+			int[] generalRidersPoints = new int[tempSortedPoints.size()];
+			for(int i = 0; i < tempSortedPoints.size() ; i++) {
+				generalRidersPoints[i] = (int)tempSortedPoints.get(i).get(1);
+			}
+			
+			return generalRidersPoints;
+			
+		} 
+		return new int[0];
 	}
 
 	@Override
 	public int[] getRidersMountainPointClassificationRank(int raceId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
-		return null;
+		if(raceList.get(raceId).getStageList().size() != 0 ) {
+			ArrayList<ArrayList<Object>> tempTotalMountainPoints=  new ArrayList<>();
+			for(int i = 0; i< raceList.get(raceId).getStageList().size(); i++) { // iterates through each stage
+				int[] tempMountainPoints = getRidersMountainPointsInStage(raceList.get(raceId).getStageList().get(i));
+				int[] tempRiderId = getRidersRankInStage(raceList.get(raceId).getStageList().get(i));
+				if(tempTotalMountainPoints.size() == 0) {
+					for(int j = 0; j < tempMountainPoints.length; j++) {
+						tempTotalMountainPoints.get(0).add(0,tempMountainPoints[j]);
+						tempTotalMountainPoints.get(0).add(1,tempRiderId[j]);
+					}
+				}else {
+					for(int j=0; j< tempMountainPoints.length;j++) { // iterates through rider
+						for(int z=0; z<tempMountainPoints.length; z++) {// iterates through each item in temporary value to find correct location to add
+							if(tempRiderId[j] == (Integer)tempTotalMountainPoints.get(z).get(1)) {
+								// change this to work out elapsed time
+								tempTotalMountainPoints.get(z).set(0,tempMountainPoints[j]+(Integer)tempTotalMountainPoints.get(z).get(0));
+							}
+						}
+					}
+				
+				// sort list by creating a new list and insert sorting
+				}
+			
+	 		}
+			ArrayList<ArrayList<Object>> tempSortedMountainPoints=  new ArrayList<>();
+			tempSortedMountainPoints.get(0).add(0,tempTotalMountainPoints.get(0).get(0));
+			tempSortedMountainPoints.get(0).add(1,tempTotalMountainPoints.get(0).get(0));
+			for(int i = 0; i<tempTotalMountainPoints.size(); i++) {// iterates through tempTotalElapsedTime
+				for(int j = 0; j<tempSortedMountainPoints.size(); j++) {// iterates through tempSortedTotalElapsedTime
+					if(((Integer)tempSortedMountainPoints.get(j).get(0)) < ((Integer)tempTotalMountainPoints.get(i).get(0))) {
+						ArrayList<Object> tempArrayList = new ArrayList<>();
+						tempArrayList.add(0,tempTotalMountainPoints.get(i).get(0));
+						tempArrayList.add(1,tempTotalMountainPoints.get(i).get(1));
+						tempSortedMountainPoints.add(j, tempArrayList);
+					}
+				}
+			}
+			
+			int[] generalRidersMountainPoints = new int[tempSortedMountainPoints.size()];
+			for(int i = 0; i < tempSortedMountainPoints.size() ; i++) {
+				generalRidersMountainPoints[i] = (int)tempSortedMountainPoints.get(i).get(1);
+			}
+			
+			return generalRidersMountainPoints;
+			
+		} 
+		return new int[0];
 	}
 
 }
