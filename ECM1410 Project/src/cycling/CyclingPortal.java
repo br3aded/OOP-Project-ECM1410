@@ -464,8 +464,11 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public void eraseCyclingPortal() {
-		// TODO Auto-generated method stub
-
+		ArrayList<Team> teamList = new ArrayList<Team>();
+		ArrayList<Rider> riderList = new ArrayList<Rider>();
+		ArrayList<Race> raceList = new ArrayList<Race>();
+		ArrayList<Stage> stageList = new ArrayList<Stage>();
+		ArrayList<Segment> segmentList = new ArrayList<>();
 	}
 
 	@Override
