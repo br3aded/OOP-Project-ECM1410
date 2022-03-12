@@ -500,7 +500,26 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public LocalTime[] getGeneralClassificationTimesInRace(int raceId) throws IDNotRecognisedException {
-		// TODO Auto-generated method stub
+		ArrayList<ArrayList<Object>> tempTotalElapsedTime=  new ArrayList<>();
+		for(int i = 0; i< raceList.get(raceId).getStageList().size(); i++) {
+			LocalTime[] tempElapsedTime = getRankedAdjustedElapsedTimesInStage(raceList.get(raceId).getStageList().get(i));
+			int[] tempRiderId = getRidersRankInStage(raceList.get(raceId).getStageList().get(i));
+			if(tempTotalElapsedTime.size() == 0) {
+				for(int j = 0; j < tempElapsedTime.length; j++) {
+					tempTotalElapsedTime.get(0).add(0,tempElapsedTime[j]);
+					tempTotalElapsedTime.get(0).add(1,tempRiderId[j]);
+				}
+			}else {
+				for(int j=0; j< tempElapsedTime.length;j++) {
+					for(int z=0; z<tempElapsedTime.length; z++) {
+						if(tempRiderId[j] == (Integer)tempTotalElapsedTime.get(z).get(i)) {
+							// change this to work out elapsed time
+							tempTotalElapsedTime.get(z).set(i,LocalTime.of(currentElapsedTime[currentElapsedTime.length-1].getHour()-currentElapsedTime[0].getHour(),currentElapsedTime[currentElapsedTime.length-1].getMinute()-currentElapsedTime[0].getMinute(),currentElapsedTime[currentElapsedTime.length-1].getSecond()-currentElapsedTime[0].getSecond(),currentElapsedTime[currentElapsedTime.length-1].getNano()-currentElapsedTime[0].getNano());)
+						}
+				}
+			// sort list by creating a new list and insert sorting
+			}
+ 		}
 		return null;
 	}
 
