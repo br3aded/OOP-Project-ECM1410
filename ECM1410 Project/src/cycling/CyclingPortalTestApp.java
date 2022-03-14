@@ -6,7 +6,6 @@ public class CyclingPortalTestApp {
 	public static void main (String[] args) throws IllegalNameException, InvalidNameException, IllegalArgumentException, IDNotRecognisedException {
 		CyclingPortal cyclingportal = new CyclingPortal();
 		cyclingportal.createTeam("team1", "just a team");
-		cyclingportal.createTeam("team2", "just a team");
 		cyclingportal.createTeam("team2", "just a team part 2 electric boogaloo");
 		cyclingportal.createRider(0, "Aob", 2002);
 		cyclingportal.createRider(0, "Bob", 2002);

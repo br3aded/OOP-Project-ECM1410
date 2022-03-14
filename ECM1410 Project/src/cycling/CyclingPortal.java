@@ -276,6 +276,7 @@ public class CyclingPortal implements CyclingPortalInterface {
 
 	@Override
 	public LocalTime[] getRiderResultsInStage(int stageId, int riderId) throws IDNotRecognisedException {
+	
 		return null;
 	}
 
@@ -424,7 +425,7 @@ public class CyclingPortal implements CyclingPortalInterface {
 					tempSegmentSort.get(0).add(1,stageList.get(stageId).getStageResults().get(0).get(1));
 					
 				}else {
-					for(int z=0; z<tempSegmentSort.size();z++){//loops through tempSegment Position 
+					for(int z=0; z<tempSegmentSort.size()-1;z++){//loops through tempSegment Position 
 						LocalTime[] tempCurrent = (LocalTime[])tempSegmentSort.get(z).get(0);
 						LocalTime[] tempBefore = (LocalTime[])stageList.get(stageId).getStageResults().get(j).get(0);
 						if(((LocalTime)tempCurrent[i]).isBefore((LocalTime)tempBefore[i]) == true){
