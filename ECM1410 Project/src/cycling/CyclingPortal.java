@@ -309,6 +309,11 @@ public class CyclingPortal implements CyclingPortalInterface {
 		if ((teamId >= teamList.size()) || (teamList.get(teamId) == null)) {
 			throw new IDNotRecognisedException("This teamID does not exist");
 		}
+		if(teamList.get(teamId).getRiderList().size()==0)
+		{
+			int[] emptyList = {};
+			return emptyList;
+		}
 		int[] riderIdList = teamList.get(teamId).getRiderList().stream().filter(i -> i != null).mapToInt(i -> i)
 				.toArray();
 		return riderIdList;
