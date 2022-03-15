@@ -125,17 +125,17 @@ public class CyclingPortal implements CyclingPortalInterface {
 		}
 		stageList.add(new Stage(raceId, stageName, description, length, startTime, type));
 		if (raceList.get(raceId).getStageList().size() != 0) {
-			for (int i = 0; i < raceList.get(raceId).getStageList().size(); i++) {
-				if (stageList.get(raceList.get(raceId).getStageList().get(i)).getStageStartTime()
-						.isAfter(stageList.get(raceList.get(raceId).getStageList().get(stageList.size() - 1))
-								.getStageStartTime()) != true) {
-					raceList.get(raceId).getStageList().add(i, stageList.size() - 1);
-				}
-			}
-		} else {
+			//for (int i = 0; i < raceList.get(raceId).getStageList().size()-1; i++) {
+				//if (stageList.get(raceList.get(raceId).getStageList().get(i)).getStageStartTime().isAfter(stageList.get(stageList.size() - 1)
+								//.getStageStartTime()) == false) {
+			raceList.get(raceId).addStage(stageList.size() - 1);
+			
+					//break;
+				//}
+			} else {
 			raceList.get(raceId).getStageList().add(0, stageList.size() - 1);
 		}
-		raceList.get(raceId).addStage(stageList.size() - 1);
+		//raceList.get(raceId).addStage(stageList.size() - 1);
 
 		return stageList.size() - 1;
 	}
@@ -192,13 +192,15 @@ public class CyclingPortal implements CyclingPortalInterface {
 		segmentList.add(new Segment(stageId, location, averageGradient, length, type));
 		if (stageList.get(stageId).getSegmentList().size() != 0) {
 			for (int i = 0; i < stageList.get(stageId).getSegmentList().size(); i++) {
-				if (segmentList.get(stageList.get(stageId).getSegmentList().get(i)).getLocation() > segmentList
+				if (segmentList.get(stageList.get(stageId).getSegmentList().get(i)).getLocation() >= segmentList
 						.get(segmentList.size() - 1).getLocation()) {
 					stageList.get(stageId).getSegmentList().add(i, (segmentList.size() - 1));
+					return segmentList.size() - 1;
 				}
 			}
+		stageList.get(stageId).getSegmentList().add((segmentList.size() - 1));
 		} else {
-			stageList.get(stageId).getSegmentList().add(0, (segmentList.size() - 1));
+			stageList.get(stageId).getSegmentList().add((segmentList.size() - 1));
 		}
 		return segmentList.size() - 1;
 	}
@@ -223,13 +225,15 @@ public class CyclingPortal implements CyclingPortalInterface {
 		segmentList.add(new Segment(stageId, location));
 		if (stageList.get(stageId).getSegmentList().size() != 0) {
 			for (int i = 0; i < stageList.get(stageId).getSegmentList().size(); i++) {
-				if (segmentList.get(stageList.get(stageId).getSegmentList().get(i)).getLocation() > segmentList
+				if (segmentList.get(stageList.get(stageId).getSegmentList().get(i)).getLocation() >= segmentList
 						.get(segmentList.size() - 1).getLocation()) {
 					stageList.get(stageId).getSegmentList().add(i, (segmentList.size() - 1));
+					return segmentList.size() - 1;
 				}
 			}
+		stageList.get(stageId).getSegmentList().add((segmentList.size() - 1));
 		} else {
-			stageList.get(stageId).getSegmentList().add(0, (segmentList.size() - 1));
+			stageList.get(stageId).getSegmentList().add((segmentList.size() - 1));
 		}
 		return segmentList.size() - 1;
 	}

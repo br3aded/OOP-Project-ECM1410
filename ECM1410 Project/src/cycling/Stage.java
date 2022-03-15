@@ -77,6 +77,10 @@ public class Stage {
 		}
 	}
 	
+	public void setSegmentList(int i , int segmentId) {
+		segmentIdList.add(i,segmentId);
+	}
+	
 	public ArrayList<Integer> getSegmentList() {return segmentIdList;}
 	
 	public ArrayList<ArrayList<Object>> getStageResults(){return stageResults;}
