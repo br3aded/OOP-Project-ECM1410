@@ -47,7 +47,7 @@ public class CyclingPortalTestApp {
 		//System.out.println(Arrays.toString(cyclingportal.getStageSegments(1)));
 		//System.out.println(Arrays.toString(cyclingportal.getStageSegments(2)));
 		
-		
+		// test score functions
 		
 		
 		
