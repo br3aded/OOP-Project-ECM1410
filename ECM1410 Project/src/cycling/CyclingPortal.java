@@ -352,6 +352,9 @@ public class CyclingPortal implements CyclingPortalInterface {
 	public void registerRiderResultsInStage(int stageId, int riderId, LocalTime... checkpoints)
 			throws IDNotRecognisedException, DuplicatedResultException, InvalidCheckpointsException, // qwerty
 			InvalidStageStateException {
+		if ((riderId >= riderList.size()) || (riderList.get(riderId) == null)) {
+			throw new IDNotRecognisedException("This riderID does not exist");
+		}
 		if (stageList.get(stageId).getIsConcluded() == true) {
 			if (stageList.get(stageId).getStageResults().size() == 0) {
 				stageList.get(stageId).getStageResults().get(0).add(0, checkpoints);
