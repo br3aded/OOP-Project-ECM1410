@@ -26,8 +26,8 @@ public class CyclingPortalTestApp {
 		//need to write check in case getTeamRiders catches  null value
 		
 		cyclingportal.removeTeam(1);
-		
-		
+		cyclingportal.addStageToRace(0,"stage 3", "just stage 3", 10 ,LocalDateTime.parse("2022-12-03T16:00:00"), StageType.HIGH_MOUNTAIN);
+		cyclingportal.addStageToRace(0,"stage 2", "just stage 2", 10 ,LocalDateTime.parse("2022-12-03T14:00:00"), StageType.TT);
 		cyclingportal.addStageToRace(0,"stage 1", "just stage 1", 10 ,LocalDateTime.parse("2022-12-03T12:00:00"), StageType.FLAT);
 		cyclingportal.addCategorizedClimbToStage(0, 6.5, SegmentType.C2, 12.0, 1.5);
 		//System.out.println(cyclingportal.raceList.get(0).getStageList());
@@ -36,21 +36,16 @@ public class CyclingPortalTestApp {
 		cyclingportal.addIntermediateSprintToStage(0, 2.0);
 		//System.out.println(Arrays.toString(cyclingportal.getStageSegments(0)));
 		cyclingportal.concludeStagePreparation(0);
-		cyclingportal.addStageToRace(0,"stage 2", "just stage 2", 10 ,LocalDateTime.parse("2022-12-03T14:00:00"), StageType.TT);
 		cyclingportal.concludeStagePreparation(1);
-		cyclingportal.addStageToRace(0,"stage 3", "just stage 3", 10 ,LocalDateTime.parse("2022-12-03T16:00:00"), StageType.HIGH_MOUNTAIN);
 		cyclingportal.addIntermediateSprintToStage(2, 2);
 		cyclingportal.addCategorizedClimbToStage(2, 2.0, SegmentType.HC, 8.0, 2.0);
 		cyclingportal.addIntermediateSprintToStage(2, 6.5);
 		cyclingportal.concludeStagePreparation(2);
-		//System.out.println(cyclingportal.raceList.get(0).getStageList());
+		System.out.println(cyclingportal.raceList.get(0).getStageList());
 		//System.out.println(cyclingportal.viewRaceDetails(0));
-		//System.out.println(Arrays.toString(cyclingportal.getStageSegments(0)));
+		System.out.println(Arrays.toString(cyclingportal.getStageSegments(0)));
 		//System.out.println(Arrays.toString(cyclingportal.getStageSegments(1)));
 		//System.out.println(Arrays.toString(cyclingportal.getStageSegments(2)));
-		
-		
-		
 		
 		
 		
