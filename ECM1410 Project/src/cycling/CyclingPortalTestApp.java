@@ -106,7 +106,7 @@ public class CyclingPortalTestApp {
 		LocalTime[] s3rider4results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:23:00"),LocalTime.parse("12:30:00.3")};
 		LocalTime[] s3rider5results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:24:00"),LocalTime.parse("12:30:00.6")};
 		LocalTime[] s3rider6results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:25:00"),LocalTime.parse("12:30:00")};
-		LocalTime[] s3rider7results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:26:00"),LocalTime.parse("12:30:00")};
+		LocalTime[] s3rider7results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:26:00"),LocalTime.parse("12:50:00")};
 		LocalTime[] s3rider8results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:27:00"),LocalTime.parse("12:30:00")};
 		
 		cyclingportal.registerRiderResultsInStage(2, 0, s3rider1results);
@@ -128,6 +128,14 @@ public class CyclingPortalTestApp {
 		System.out.println(Arrays.toString(cyclingportal.getRidersPointsInStage(0)));
 		System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointsInStage(0)));
 		
+		//System.out.println(Arrays.toString(cyclingportal.getGeneralClassificationTimesInRace(0)));
+		//System.out.println(Arrays.toString(cyclingportal.getRidersPointsInRace(0)));
+		//System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointsInRace(0)));
+		//System.out.println(Arrays.toString(cyclingportal.getRidersGeneralClassificationRank(0)));
+		//System.out.println(Arrays.toString(cyclingportal.getRidersPointClassificationRank(0)));
+		//System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointClassificationRank(0)));
+		
+		//need to rewrite all of these , go through see what returns and start from scratch
 		System.out.println("end");
 	}
 }
