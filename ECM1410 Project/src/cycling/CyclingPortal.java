@@ -357,8 +357,11 @@ public class CyclingPortal implements CyclingPortalInterface {
 		}
 		if (stageList.get(stageId).getIsConcluded() == true) {
 			if (stageList.get(stageId).getStageResults().size() == 0) {
-				stageList.get(stageId).getStageResults().get(0).add(0, checkpoints);
-				stageList.get(stageId).getStageResults().get(0).add(1, riderId);
+				ArrayList<Object> tempStore =  new ArrayList<>();
+				tempStore.add(checkpoints);
+				tempStore.add(riderId);
+				stageList.get(stageId).getStageResults().add(tempStore);
+				return;
 			} else {
 				LocalTime tempCheckpointsElapsedTime = LocalTime.of(
 						checkpoints[checkpoints.length - 1].getHour() - checkpoints[0].getHour(),
@@ -372,17 +375,18 @@ public class CyclingPortal implements CyclingPortalInterface {
 							tempCheckpoints[tempCheckpoints.length - 1].getMinute() - tempCheckpoints[0].getMinute(),
 							tempCheckpoints[tempCheckpoints.length - 1].getSecond() - tempCheckpoints[0].getSecond(),
 							tempCheckpoints[tempCheckpoints.length - 1].getNano() - tempCheckpoints[0].getNano());
-					if (tempCheckpointsElapsedTime.isBefore(tempElapsedTime)) {
+					if (tempCheckpointsElapsedTime.isAfter(tempElapsedTime) == false) {
 						ArrayList<Object> tempArrayList = new ArrayList<>();
 						tempArrayList.add(checkpoints);
 						tempArrayList.add(riderId);
 						stageList.get(stageId).getStageResults().add(i, tempArrayList);
-						// stageList.get(stageId).getStageResults().get(i).add(0,checkpoints); keeping
-						// here incase this was correct
-						// stageList.get(stageId).getStageResults().get(i).add(1,riderId);
+						return;
 					}
 				}
-			}
+			}ArrayList<Object> tempArrayList = new ArrayList<>();
+			tempArrayList.add(checkpoints);
+			tempArrayList.add(riderId);
+			stageList.get(stageId).getStageResults().add(tempArrayList);
 
 		} else {
 			throw new InvalidStageStateException("Stage state hasnt been concluded");
@@ -402,12 +406,12 @@ public class CyclingPortal implements CyclingPortalInterface {
 		for (int i = 0; i < stageList.get(stageId).getStageResults().size(); i++) {
 			if ((Integer) stageList.get(stageId).getStageResults().get(i).get(1) == riderId) {
 				LocalTime[] tempResultsStore = (LocalTime[]) stageList.get(stageId).getStageResults().get(i).get(0);
-				riderResults = Arrays.copyOf(tempResultsStore, tempResultsStore.length);
-				riderResults[riderResults.length - 1] = LocalTime.of(
-						tempResultsStore[tempResultsStore.length - 1].getHour() - tempResultsStore[0].getHour(),
-						tempResultsStore[tempResultsStore.length - 1].getMinute() - tempResultsStore[0].getMinute(),
-						tempResultsStore[tempResultsStore.length - 1].getSecond() - tempResultsStore[0].getSecond(),
-						tempResultsStore[tempResultsStore.length - 1].getNano() - tempResultsStore[0].getNano());
+				riderResults = Arrays.copyOf(tempResultsStore, tempResultsStore.length+1);
+				riderResults[riderResults.length-1] = LocalTime.of(
+						tempResultsStore[tempResultsStore.length-1].getHour() - tempResultsStore[0].getHour(),
+						tempResultsStore[tempResultsStore.length-1].getMinute() - tempResultsStore[0].getMinute(),
+						tempResultsStore[tempResultsStore.length-1].getSecond() - tempResultsStore[0].getSecond(),
+						tempResultsStore[tempResultsStore.length-1].getNano() - tempResultsStore[0].getNano());
 				break;
 			}
 		}
@@ -439,7 +443,7 @@ public class CyclingPortal implements CyclingPortalInterface {
 			}
 		}
 
-		LocalTime[] currentElapsedTime = null;
+		LocalTime[] currentElapsedTime = (LocalTime[]) stageList.get(stageId).getStageResults().get(positionInStageResults).get(0);
 		for (int i = positionInStageResults; i > 0; i--) {
 			LocalTime[] checkpointsCurrent = (LocalTime[]) stageList.get(stageId).getStageResults().get(i).get(0);
 			LocalTime[] checkpointsBelow = (LocalTime[]) stageList.get(stageId).getStageResults().get(i - 1).get(0);
@@ -482,8 +486,9 @@ public class CyclingPortal implements CyclingPortalInterface {
 			throw new IDNotRecognisedException("This stageID does not exist");
 		}
 		if (stageList.get(stageId).getStageResults().size() != 0) {
-			ridersRanked = new int[stageList.get(stageId).getStageResults().size() - 1];
+			ridersRanked = new int[stageList.get(stageId).getStageResults().size()];	
 			for (int i = 0; i < stageList.get(stageId).getStageResults().size(); i++) {
+				System.out.println(stageList.get(stageId).getStageResults().get(i));
 				ridersRanked[i] = (Integer) stageList.get(stageId).getStageResults().get(i).get(1);
 			}
 		} else {

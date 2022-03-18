@@ -57,30 +57,30 @@ public class CyclingPortalTestApp {
 		// test score functions
 		
 		//stage 1 results
-		LocalTime[] rider1results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:20:00"),LocalTime.parse("12:30:00")};
-		LocalTime[] rider2results = {LocalTime.parse("12:11:00"),LocalTime.parse("12:21:00"),LocalTime.parse("12:31:00")};
-		LocalTime[] rider3results = {LocalTime.parse("12:12:00"),LocalTime.parse("12:22:00"),LocalTime.parse("12:32:00")};
-		LocalTime[] rider4results = {LocalTime.parse("12:13:00"),LocalTime.parse("12:23:00"),LocalTime.parse("12:33:00")};
-		LocalTime[] rider5results = {LocalTime.parse("12:14:00"),LocalTime.parse("12:24:00"),LocalTime.parse("12:34:00")};
-		LocalTime[] rider6results = {LocalTime.parse("12:15:00"),LocalTime.parse("12:25:00"),LocalTime.parse("12:35:00")};
-		LocalTime[] rider7results = {LocalTime.parse("12:16:00"),LocalTime.parse("12:26:00"),LocalTime.parse("12:36:00")};
-		LocalTime[] rider8results = {LocalTime.parse("12:17:00"),LocalTime.parse("12:27:00"),LocalTime.parse("12:37:00")};
+		LocalTime[] rider1results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:20:00"),LocalTime.parse("12:30:01.1")};
+		LocalTime[] rider2results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:21:01"),LocalTime.parse("12:30:01.2")};
+		LocalTime[] rider3results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:22:00"),LocalTime.parse("12:30:01.3")};
+		LocalTime[] rider4results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:23:00"),LocalTime.parse("12:30:01.4")};
+		LocalTime[] rider5results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:24:00"),LocalTime.parse("12:34:01.5")};
+		LocalTime[] rider6results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:25:00"),LocalTime.parse("12:35:01.6")};
+		LocalTime[] rider7results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:26:00"),LocalTime.parse("12:36:01.7")};
+		LocalTime[] rider8results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:27:00"),LocalTime.parse("12:37:01.8")};
 
 		
-		
+		cyclingportal.registerRiderResultsInStage(0, 5, rider6results);
+		cyclingportal.registerRiderResultsInStage(0, 6, rider7results);
+		cyclingportal.registerRiderResultsInStage(0, 7, rider8results);
 		cyclingportal.registerRiderResultsInStage(0, 0, rider1results);
 		cyclingportal.registerRiderResultsInStage(0, 1, rider2results);
 		cyclingportal.registerRiderResultsInStage(0, 2, rider3results);
 		cyclingportal.registerRiderResultsInStage(0, 3, rider4results);
 		cyclingportal.registerRiderResultsInStage(0, 4, rider5results);
-		cyclingportal.registerRiderResultsInStage(0, 5, rider6results);
-		cyclingportal.registerRiderResultsInStage(0, 6, rider7results);
-		cyclingportal.registerRiderResultsInStage(0, 7, rider8results);
 		
 		
 		
-		LocalTime[] s2rider1results = {LocalTime.parse("12:12:00"),LocalTime.parse("12:22:00"),LocalTime.parse("12:32:00")};
-		LocalTime[] s2rider2results = {LocalTime.parse("12:12:00"),LocalTime.parse("12:22:00"),LocalTime.parse("12:32:00")};
+		
+		LocalTime[] s2rider1results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:20:00"),LocalTime.parse("12:30:00")};
+		LocalTime[] s2rider2results = {LocalTime.parse("12:11:00"),LocalTime.parse("12:21:00"),LocalTime.parse("12:31:00")};
 		LocalTime[] s2rider3results = {LocalTime.parse("12:12:00"),LocalTime.parse("12:22:00"),LocalTime.parse("12:32:00")};
 		LocalTime[] s2rider4results = {LocalTime.parse("12:13:00"),LocalTime.parse("12:23:00"),LocalTime.parse("12:33:00")};
 		LocalTime[] s2rider5results = {LocalTime.parse("12:14:00"),LocalTime.parse("12:24:00"),LocalTime.parse("12:34:00")};
@@ -100,14 +100,14 @@ public class CyclingPortalTestApp {
 		
 		
 		
-		LocalTime[] s3rider1results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:20:00"),LocalTime.parse("12:30:00")};
-		LocalTime[] s3rider2results = {LocalTime.parse("12:11:00"),LocalTime.parse("12:21:00"),LocalTime.parse("12:31:00")};
-		LocalTime[] s3rider3results = {LocalTime.parse("12:12:00"),LocalTime.parse("12:22:00"),LocalTime.parse("12:32:00")};
-		LocalTime[] s3rider4results = {LocalTime.parse("12:13:00"),LocalTime.parse("12:23:00"),LocalTime.parse("12:33:00")};
-		LocalTime[] s3rider5results = {LocalTime.parse("12:14:00"),LocalTime.parse("12:24:00"),LocalTime.parse("12:34:00")};
-		LocalTime[] s3rider6results = {LocalTime.parse("12:15:00"),LocalTime.parse("12:25:00"),LocalTime.parse("12:35:00")};
-		LocalTime[] s3rider7results = {LocalTime.parse("12:16:00"),LocalTime.parse("12:26:00"),LocalTime.parse("12:36:00")};
-		LocalTime[] s3rider8results = {LocalTime.parse("12:17:00"),LocalTime.parse("12:27:00"),LocalTime.parse("12:37:00")};
+		LocalTime[] s3rider1results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:20:00"),LocalTime.parse("12:30:00")};
+		LocalTime[] s3rider2results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:21:00"),LocalTime.parse("12:30:00.1")};
+		LocalTime[] s3rider3results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:22:00"),LocalTime.parse("12:30:00.2")};
+		LocalTime[] s3rider4results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:23:00"),LocalTime.parse("12:30:00.3")};
+		LocalTime[] s3rider5results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:24:00"),LocalTime.parse("12:30:00.6")};
+		LocalTime[] s3rider6results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:25:00"),LocalTime.parse("12:30:00")};
+		LocalTime[] s3rider7results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:26:00"),LocalTime.parse("12:30:00")};
+		LocalTime[] s3rider8results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:27:00"),LocalTime.parse("12:30:00")};
 		
 		cyclingportal.registerRiderResultsInStage(2, 0, s3rider1results);
 		cyclingportal.registerRiderResultsInStage(2, 1, s3rider2results);
@@ -118,9 +118,12 @@ public class CyclingPortalTestApp {
 		cyclingportal.registerRiderResultsInStage(2, 6, s3rider7results);
 		cyclingportal.registerRiderResultsInStage(2, 7, s3rider8results);
 		
-		
+		System.out.println(Arrays.toString(cyclingportal.getRidersRankInStage(0)));
+		System.out.println(Arrays.toString(cyclingportal.getRiderResultsInStage(1,0)));
 		//error is caused due to the .get() method inside of "stageList.get(stageId).getStageResults().get(0).add(0, checkpoints);"
 		
+		System.out.println((cyclingportal.getRiderAdjustedElapsedTimeInStage(2,0)));
+		System.out.println((cyclingportal.getRiderAdjustedElapsedTimeInStage(2,7)));
 		
 		System.out.println("end");
 	}
