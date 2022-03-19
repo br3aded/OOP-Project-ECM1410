@@ -635,7 +635,7 @@ public class CyclingPortal implements CyclingPortalInterface{
 				tempRiderSorted[j] = (Integer)tempSegmentSort.get(j).get(1);
 			}
 			ArrayList<Integer> tempStoreSegmentList = stageList.get(stageId).getSegmentList();
-			for(int k = 0 ; k< tempSegmentSort.size(); k++) {
+			for(int k = 0 ; k< tempRiderSorted.length; k++) {
 				for(int z = 0; z< tempStageResults.size(); z++) {
 					if(tempRiderSorted[k] ==  tempStageResults.get(z).get(1)) {
 						if(segmentList.get(tempStoreSegmentList.get(i)).getType() == SegmentType.C4 ) {
