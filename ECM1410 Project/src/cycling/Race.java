@@ -1,9 +1,10 @@
 package cycling;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Race {
+public class Race implements Serializable {
 	private ArrayList<Integer> stageIdList;
 	
 	public void addStage(int stageId) {

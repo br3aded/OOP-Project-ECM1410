@@ -1,9 +1,10 @@
 package cycling;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Team {
+public class Team implements Serializable{
 	private ArrayList<Integer> riderIdList;
 	private String teamName;
 	

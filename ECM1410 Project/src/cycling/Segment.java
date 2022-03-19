@@ -1,6 +1,8 @@
 package cycling;
 
-public class Segment {
+import java.io.Serializable;
+
+public class Segment implements Serializable {
 	private int stageId;
 	private double location;
 	private double averageGradient;
