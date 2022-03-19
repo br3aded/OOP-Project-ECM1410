@@ -131,16 +131,16 @@ public class CyclingPortalTestApp {
 		//System.out.println(Arrays.toString(cyclingportal.getRidersPointsInStage(2)));
 		//System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointsInStage(2)));
 		
-		System.out.println(Arrays.toString(cyclingportal.getGeneralClassificationTimesInRace(0)));
-		System.out.println(Arrays.toString(cyclingportal.getRidersGeneralClassificationRank(0)));
+		//System.out.println(Arrays.toString(cyclingportal.getGeneralClassificationTimesInRace(0)));
+		//System.out.println(Arrays.toString(cyclingportal.getRidersGeneralClassificationRank(0)));
 		
 		
 		System.out.println(Arrays.toString(cyclingportal.getRidersPointsInRace(0)));
 		System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointsInRace(0)));
 		
 		
-		System.out.println(Arrays.toString(cyclingportal.getRidersPointClassificationRank(0)));
-		System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointClassificationRank(0)));
+		//System.out.println(Arrays.toString(cyclingportal.getRidersPointClassificationRank(0)));
+		//System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointClassificationRank(0)));
 		
 		cyclingportal.saveCyclingPortal("cyclingportal");
 		cyclingportal.eraseCyclingPortal();

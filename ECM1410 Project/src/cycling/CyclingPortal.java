@@ -621,11 +621,12 @@ public class CyclingPortal implements CyclingPortalInterface{
 						tempArray.add(stageList.get(stageId).getStageResults().get(j).get(1));
 						tempSegmentSort.add(z,tempArray);
 						break;
-					}else if(z == tempSegmentSort.size()){
+					}else if(z == tempSegmentSort.size()-1){
 						ArrayList<Object> tempArray = new ArrayList<>();
 						tempArray.add((((LocalTime[])stageList.get(stageId).getStageResults().get(j).get(0)))[i]);
 						tempArray.add(stageList.get(stageId).getStageResults().get(j).get(1));
 						tempSegmentSort.add(tempArray);
+						break;
 						}
 				
 				}
