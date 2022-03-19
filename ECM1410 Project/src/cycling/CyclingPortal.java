@@ -1,5 +1,4 @@
 package cycling;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -608,54 +607,61 @@ public class CyclingPortal implements CyclingPortalInterface{
 		for(int i = 0 ;  i<stageList.get(stageId).getSegmentList().size();i++) { // sorts per segment
 			ArrayList<ArrayList<Object>> tempSegmentSort =  new ArrayList<>();
 			for(int j = 0 ;  j<stageList.get(stageId).getStageResults().size() ; j++) {
-				for(int z = 0; z < tempSegmentSort.size(); z++) {
-					if(tempSegmentSort.size() == 0) {
-						ArrayList<Object> tempArray = new ArrayList<>();
-						tempArray.add((((LocalTime[])stageList.get(stageId).getStageResults().get(0).get(0)))[i]);
-						tempArray.add(stageList.get(stageId).getStageResults().get(0).get(1));
-						tempSegmentSort.add(tempArray);
-					}else {
-						if(((LocalTime)tempSegmentSort.get(z).get(0)).isAfter((((LocalTime[])stageList.get(stageId).getStageResults().get(0).get(0)))[i]) == true) {
-							ArrayList<Object> tempArray = new ArrayList<>();
-							tempArray.add((((LocalTime[])stageList.get(stageId).getStageResults().get(0).get(0)))[i]);
-							tempArray.add(stageList.get(stageId).getStageResults().get(0).get(1));
-							tempSegmentSort.add(z,tempArray);
-							break;
-						}
-					}
+				if(tempSegmentSort.size() == 0) {
+					ArrayList<Object> tempArray = new ArrayList<>();
+					tempArray.add((((LocalTime[])stageList.get(stageId).getStageResults().get(j).get(0)))[i]);
+					tempArray.add(stageList.get(stageId).getStageResults().get(j).get(1));
+					tempSegmentSort.add(tempArray);
+					continue;
 				}
-				ArrayList<Object> tempArray = new ArrayList<>();
-				tempArray.add((((LocalTime[])stageList.get(stageId).getStageResults().get(0).get(0)))[i]);
-				tempArray.add(stageList.get(stageId).getStageResults().get(0).get(1));
-				tempSegmentSort.add(tempArray);
+				for(int z = 0; z < tempSegmentSort.size(); z++) {
+					if(((LocalTime)tempSegmentSort.get(z).get(0)).isAfter((((LocalTime[])stageList.get(stageId).getStageResults().get(j).get(0)))[i]) == true) {
+						ArrayList<Object> tempArray = new ArrayList<>();
+						tempArray.add((((LocalTime[])stageList.get(stageId).getStageResults().get(j).get(0)))[i]);
+						tempArray.add(stageList.get(stageId).getStageResults().get(j).get(1));
+						tempSegmentSort.add(z,tempArray);
+						break;
+					}else if(z == tempSegmentSort.size()){
+						ArrayList<Object> tempArray = new ArrayList<>();
+						tempArray.add((((LocalTime[])stageList.get(stageId).getStageResults().get(j).get(0)))[i]);
+						tempArray.add(stageList.get(stageId).getStageResults().get(j).get(1));
+						tempSegmentSort.add(tempArray);
+						}
+				
+				}
 			}
 			int[] tempRiderSorted = new int[riderPosition.length];
 			for(int j = 0; j< tempSegmentSort.size(); j++) {
 				tempRiderSorted[j] = (Integer)tempSegmentSort.get(j).get(1);
 			}
 			ArrayList<Integer> tempStoreSegmentList = stageList.get(stageId).getSegmentList();
-			for(int k = 0 ; k< tempRiderSorted.length; k++) {
+			for(int k = 0 ; k< tempSegmentSort.size(); k++) {
 				for(int z = 0; z< tempStageResults.size(); z++) {
 					if(tempRiderSorted[k] ==  tempStageResults.get(z).get(1)) {
 						if(segmentList.get(tempStoreSegmentList.get(i)).getType() == SegmentType.C4 ) {
 							if(k< FOURCSCORE.length) {
 								tempStageResults.get(z).set(0, tempStageResults.get(z).get(0) + FOURCSCORE[k]);
+								break;
 							}
 						}else if(segmentList.get(tempStoreSegmentList.get(i)).getType() == SegmentType.C3 ) {
 							if(k< THREECSCORE.length) {
 								tempStageResults.get(z).set(0, tempStageResults.get(z).get(0) + THREECSCORE[k]);
+								break;
 							}
 						}else if(segmentList.get(tempStoreSegmentList.get(i)).getType() == SegmentType.C2 ) {
 							if(k< TWOCSCORE.length) {
 								tempStageResults.get(z).set(0, tempStageResults.get(z).get(0) + TWOCSCORE[k]);
+								break;
 							}
 						}else if(segmentList.get(tempStoreSegmentList.get(i)).getType() == SegmentType.C1 ) {
 							if(k< ONECSCORE.length) {
 								tempStageResults.get(z).set(0, tempStageResults.get(z).get(0) + ONECSCORE[k]);
+								break;
 							}
 						}else if(segmentList.get(tempStoreSegmentList.get(i)).getType() == SegmentType.HC ) {
 							if(k< HCSCORE.length) {
 								tempStageResults.get(z).set(0, tempStageResults.get(z).get(0) + HCSCORE[k]);
+								break;
 							}
 						}
 					}
