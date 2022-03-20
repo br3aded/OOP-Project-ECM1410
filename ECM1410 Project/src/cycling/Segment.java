@@ -2,6 +2,15 @@ package cycling;
 
 import java.io.Serializable;
 
+/**
+ *  Functions related to segments
+ * 
+ * 
+ * @author 700027589 & 710019499
+ * @version 1.0
+ *
+ */
+
 public class Segment implements Serializable {
 	private int stageId;
 	private double location;

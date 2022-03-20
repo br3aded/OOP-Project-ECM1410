@@ -4,6 +4,15 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ *  Functions related to teams
+ * 
+ * 
+ * @author 700027589 & 710019499
+ * @version 1.0
+ *
+ */
+
 public class Team implements Serializable{
 	private ArrayList<Integer> riderIdList;
 	private String teamName;

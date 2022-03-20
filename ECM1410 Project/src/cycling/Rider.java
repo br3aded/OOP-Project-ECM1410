@@ -3,6 +3,15 @@ package cycling;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ *  Functions related to riders
+ * 
+ * 
+ * @author 700027589 & 710019499
+ * @version 1.0
+ *
+ */
+
 public class Rider implements Serializable{
 
 		private int teamID;

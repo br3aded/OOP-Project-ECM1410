@@ -6,6 +6,16 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ *  Functions related to stages
+ * 
+ * 
+ * @author 700027589 & 710019499
+ * @version 1.0
+ *
+ */
+
 public class Stage implements Serializable{
 	ArrayList<Integer> segmentIdList;
 	@SuppressWarnings("rawtypes")

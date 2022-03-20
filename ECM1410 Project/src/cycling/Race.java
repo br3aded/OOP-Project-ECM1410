@@ -4,6 +4,16 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ *  Functions related to races
+ * 
+ * 
+ * @author 700027589 & 710019499
+ * @version 1.0
+ *
+ */
+
+
 public class Race implements Serializable {
 	private ArrayList<Integer> stageIdList;
 	

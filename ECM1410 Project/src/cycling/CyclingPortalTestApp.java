@@ -10,6 +10,7 @@ public class CyclingPortalTestApp {
 		CyclingPortal cyclingportal = new CyclingPortal();
 		cyclingportal.createRace("race", "the small tour");
 		
+		
 		cyclingportal.createTeam("team 1","just team 1");
 		cyclingportal.createTeam("team 2", "just team 2");
 		
