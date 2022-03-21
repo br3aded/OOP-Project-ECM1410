@@ -110,8 +110,12 @@ public class CyclingPortal implements CyclingPortalInterface{
 		if ((raceId<0) ||(raceId >= raceList.size()) || (raceList.get(raceId) == null)) {
 			throw new IDNotRecognisedException("This raceID does not exist");
 		}
-
-		// qwerty
+		for(int i =0; i<raceList.get(raceId).getStageList().size();i++) {
+			if(stageName == stageList.get(raceList.get(raceId).getStageList().get(i)).getStageName()) {
+				throw new IllegalNameException("This stage name is already in use in this race");
+			}
+		}
+		raceList.get(raceId).getStageList().get(raceId)
 
 		if ((stageName == null) || (stageName.trim() == "")) {
 			throw new InvalidNameException("A stages name cannot be either null,empty, or whitespace");
@@ -352,9 +356,24 @@ public class CyclingPortal implements CyclingPortalInterface{
 	public void registerRiderResultsInStage(int stageId, int riderId, LocalTime... checkpoints)
 			throws IDNotRecognisedException, DuplicatedResultException, InvalidCheckpointsException, // qwerty
 			InvalidStageStateException {
-		if ((riderId >= riderList.size()) || (riderList.get(riderId) == null)) {
+		
+		
+		if ((riderId<0) || (riderId >= riderList.size()) || (riderList.get(riderId) == null)) {
 			throw new IDNotRecognisedException("This riderID does not exist");
 		}
+		for(int i =0 ; i<stageList.get(stageId).getStageResults().size();i++) {
+			if((Integer)stageList.get(stageId).getStageResults().get(i).get(1) == riderId) {
+				throw new DuplicatedResultException("This rider already has results stored");
+			}
+		}
+		if(stageList.get(stageId).getSegmentList().size()+2!=checkpoints.length)
+		{
+			throw new InvalidCheckpointsException("The number of checkpoints inputted is not correct");
+		}
+		if (stageList.get(stageId).getIsConcluded()) {
+			throw new InvalidStageStateException("Segments cannot be added to stages waiting for results");
+		}
+		
 		if (stageList.get(stageId).getIsConcluded() == true) {
 			if (stageList.get(stageId).getStageResults().size() == 0) {
 				ArrayList<Object> tempStore =  new ArrayList<>();
@@ -388,9 +407,7 @@ public class CyclingPortal implements CyclingPortalInterface{
 			tempArrayList.add(riderId);
 			stageList.get(stageId).getStageResults().add(tempArrayList);
 
-		} else {
-			throw new InvalidStageStateException("Stage state hasnt been concluded");
-		}
+		} 
 
 	}
 
