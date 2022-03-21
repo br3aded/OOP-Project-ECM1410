@@ -38,20 +38,12 @@ public class Race implements Serializable {
 		return raceName;
 	}
 
-	public void setRaceName(String raceName) {
-		this.raceName = raceName;
-	}
-	
 	private String raceDescription;
 	
 	public String getRaceDescription() {
 		return raceDescription;
 	}
 
-	public void setRaceDescription(String raceDescription) {
-		this.raceDescription = raceDescription;
-	}
-	
 	public Race(String raceName, String raceDescription) {
 		this.raceName = raceName;
 		this.raceDescription = raceDescription;

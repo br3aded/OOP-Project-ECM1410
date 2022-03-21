@@ -21,35 +21,23 @@ public class Segment implements Serializable {
 	public int getStageId() {
 		return stageId;
 	}
-	public void setStageId(int stageId) {
-		this.stageId = stageId;
-	}
+
 	public double getLocation() {
 		return location;
-	}
-	public void setLocation(double location) {
-		this.location = location;
 	}
 	
 	public double getAverageGradient() {
 		return averageGradient;
 	}
-	public void setAverageGradient(double averageGradient) {
-		this.averageGradient = averageGradient;
-	}
+
 	public double getLength() {
 		return length;
 	}
-	public void setLength(double length) {
-		this.length = length;
-	}
+
 	public SegmentType getType() {
 		return type;
 	}
-	public void setType(SegmentType type) {
-		this.type = type;
-	}
-	
+
 	public Segment(int stageId, double location) {
 		this.stageId = stageId;
 		this.location = location;

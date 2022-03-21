@@ -18,10 +18,6 @@ public class Team implements Serializable{
 	private String teamName;
 	
 	public String getTeamName(){return teamName;}
-
-	public void setTeamName(String teamName) {
-		this.teamName = teamName;
-	}
 	
 	private String descriptor;
 	
@@ -30,12 +26,6 @@ public class Team implements Serializable{
 	 *  returns the descriptor of a specific team
 	 */
 	public String getDescriptor(){return descriptor;}
-	
-	private int teamId = 0;
-	
-	public void setDescriptor(String descriptor) {
-		this.descriptor = descriptor;
-	}
 	
 	public Team(String teamName, String descriptor) {
 		this.teamName =  teamName;
