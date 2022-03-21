@@ -8,6 +8,11 @@ import java.util.Arrays;
 public class CyclingPortalTestApp {
 	public static void main (String[] args) throws IllegalNameException, InvalidNameException, IllegalArgumentException, IDNotRecognisedException, InvalidLengthException, InvalidLocationException, InvalidStageStateException, InvalidStageTypeException, DuplicatedResultException, InvalidCheckpointsException, IOException, ClassNotFoundException {
 		CyclingPortal cyclingportal = new CyclingPortal();
+		
+		
+		System.out.println("a");
+		System.out.println(Arrays.toString(cyclingportal.getRaceIds()));
+		System.out.println("a");
 		cyclingportal.createRace("race", "the small tour");
 		
 		

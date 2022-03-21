@@ -748,18 +748,25 @@ public class CyclingPortal implements CyclingPortalInterface{
 	}
 
 	@Override
-	public void removeRaceByName(String name) throws NameNotRecognisedException { // qwerty
-		for (int i = 0; i < raceList.size(); i++) {
-			if (raceList.get(i).getRaceName() == name) {
-				try {
-					removeRaceById(i);
-				} catch (IDNotRecognisedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+	public void removeRaceByName(String name) throws NameNotRecognisedException { 
+		
+		for(int i=0;i<raceList.size();i++)
+		{
+			if(raceList.get(i)!=null)
+			{
+				if(raceList.get(i).getRaceName()==name)
+				{
+					try {
+						removeRaceById(i);
+					} catch (IDNotRecognisedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return;
 				}
 			}
 		}
-
+		throw new NameNotRecognisedException("This name is not in use");
 	}
 
 	@Override

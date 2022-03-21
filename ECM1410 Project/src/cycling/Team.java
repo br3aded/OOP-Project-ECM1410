@@ -25,6 +25,10 @@ public class Team implements Serializable{
 	
 	private String descriptor;
 	
+	
+	/**
+	 *  returns the descriptor of a specific team
+	 */
 	public String getDescriptor(){return descriptor;}
 	
 	private int teamId = 0;
