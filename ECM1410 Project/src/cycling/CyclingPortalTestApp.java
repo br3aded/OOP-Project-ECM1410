@@ -59,14 +59,14 @@ public class CyclingPortalTestApp {
 		// test score functions
 		
 		//stage 1 results
-		LocalTime[] rider1results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:20:00.2"),LocalTime.parse("12:30:01.2")};
-		LocalTime[] rider2results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:21:01.7"),LocalTime.parse("12:30:01.7")};
-		LocalTime[] rider3results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:22:00.5"),LocalTime.parse("12:30:01.3")};
-		LocalTime[] rider4results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:23:00"),LocalTime.parse("12:30:01.4")};
-		LocalTime[] rider5results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:24:00"),LocalTime.parse("12:30:01.5")};
-		LocalTime[] rider6results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:25:00"),LocalTime.parse("12:30:01.7")};
-		LocalTime[] rider7results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:26:00"),LocalTime.parse("12:30:01.7")};
-		LocalTime[] rider8results = {LocalTime.parse("12:10:00"),LocalTime.parse("12:27:00"),LocalTime.parse("12:30:01.1")};
+		LocalTime[] rider1results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:10:00"),LocalTime.parse("12:20:00.2"),LocalTime.parse("12:30:01.2"),LocalTime.parse("12:31:01.2")};
+		LocalTime[] rider2results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:10:00"),LocalTime.parse("12:21:01.7"),LocalTime.parse("12:30:01.7"),LocalTime.parse("12:31:01.2")};
+		LocalTime[] rider3results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:10:00"),LocalTime.parse("12:22:00.5"),LocalTime.parse("12:30:01.3"),LocalTime.parse("12:31:01.2")};
+		LocalTime[] rider4results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:10:00"),LocalTime.parse("12:23:00"),LocalTime.parse("12:30:01.4"),LocalTime.parse("12:31:01.2")};
+		LocalTime[] rider5results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:10:00"),LocalTime.parse("12:24:00"),LocalTime.parse("12:30:01.5"),LocalTime.parse("12:31:01.2")};
+		LocalTime[] rider6results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:10:00"),LocalTime.parse("12:25:00"),LocalTime.parse("12:30:01.7"),LocalTime.parse("12:31:01.2")};
+		LocalTime[] rider7results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:10:00"),LocalTime.parse("12:26:00"),LocalTime.parse("12:30:01.7"),LocalTime.parse("12:31:01.2")};
+		LocalTime[] rider8results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:10:00"),LocalTime.parse("12:27:00"),LocalTime.parse("12:30:01.1"),LocalTime.parse("12:31:01.2")};
 
 		
 		cyclingportal.registerRiderResultsInStage(0, 5, rider6results);
@@ -111,14 +111,14 @@ public class CyclingPortalTestApp {
 		LocalTime[] s3rider7results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:26:00"),LocalTime.parse("12:50:00")};
 		LocalTime[] s3rider8results = {LocalTime.parse("12:00:00"),LocalTime.parse("12:27:00"),LocalTime.parse("12:30:00")};
 		
-		cyclingportal.registerRiderResultsInStage(2, 0, s3rider1results);
-		cyclingportal.registerRiderResultsInStage(2, 1, s3rider2results);
-		cyclingportal.registerRiderResultsInStage(2, 2, s3rider3results);
-		cyclingportal.registerRiderResultsInStage(2, 3, s3rider4results);
-		cyclingportal.registerRiderResultsInStage(2, 4, s3rider5results);
-		cyclingportal.registerRiderResultsInStage(2, 5, s3rider6results);
-		cyclingportal.registerRiderResultsInStage(2, 6, s3rider7results);
-		cyclingportal.registerRiderResultsInStage(2, 7, s3rider8results);
+		cyclingportal.registerRiderResultsInStage(2, 0, rider1results);
+		cyclingportal.registerRiderResultsInStage(2, 1, rider2results);
+		cyclingportal.registerRiderResultsInStage(2, 2, rider3results);
+		cyclingportal.registerRiderResultsInStage(2, 3, rider4results);
+		cyclingportal.registerRiderResultsInStage(2, 4, rider5results);
+		cyclingportal.registerRiderResultsInStage(2, 5, rider6results);
+		cyclingportal.registerRiderResultsInStage(2, 6, rider7results);
+		cyclingportal.registerRiderResultsInStage(2, 7, rider8results);
 		
 		//System.out.println(Arrays.toString(cyclingportal.getRidersRankInStage(0)));
 		//System.out.println("c"+Arrays.toString(cyclingportal.getRiderResultsInStage(0,0)));
@@ -132,16 +132,16 @@ public class CyclingPortalTestApp {
 		//System.out.println(Arrays.toString(cyclingportal.getRidersPointsInStage(2)));
 		//System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointsInStage(2)));
 		
-		//System.out.println(Arrays.toString(cyclingportal.getGeneralClassificationTimesInRace(0)));
-		//System.out.println(Arrays.toString(cyclingportal.getRidersGeneralClassificationRank(0)));
+		System.out.println(Arrays.toString(cyclingportal.getGeneralClassificationTimesInRace(0)));
+		System.out.println(Arrays.toString(cyclingportal.getRidersGeneralClassificationRank(0)));
 		
 		
-		//System.out.println(Arrays.toString(cyclingportal.getRidersPointsInRace(0)));
+		System.out.println(Arrays.toString(cyclingportal.getRidersPointsInRace(0)));
 		System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointsInRace(0)));
 		
 		
-		//System.out.println(Arrays.toString(cyclingportal.getRidersPointClassificationRank(0)));
-		//System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointClassificationRank(0)));
+		System.out.println(Arrays.toString(cyclingportal.getRidersPointClassificationRank(0)));
+		System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointClassificationRank(0)));
 		
 		cyclingportal.saveCyclingPortal("cyclingportal");
 		cyclingportal.eraseCyclingPortal();

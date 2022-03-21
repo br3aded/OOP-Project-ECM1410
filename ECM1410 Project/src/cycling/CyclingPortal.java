@@ -115,7 +115,6 @@ public class CyclingPortal implements CyclingPortalInterface{
 				throw new IllegalNameException("This stage name is already in use in this race");
 			}
 		}
-		raceList.get(raceId).getStageList().get(raceId)
 
 		if ((stageName == null) || (stageName.trim() == "")) {
 			throw new InvalidNameException("A stages name cannot be either null,empty, or whitespace");
@@ -370,7 +369,7 @@ public class CyclingPortal implements CyclingPortalInterface{
 		{
 			throw new InvalidCheckpointsException("The number of checkpoints inputted is not correct");
 		}
-		if (stageList.get(stageId).getIsConcluded()) {
+		if (stageList.get(stageId).getIsConcluded() == false) {
 			throw new InvalidStageStateException("Segments cannot be added to stages waiting for results");
 		}
 		
@@ -550,7 +549,7 @@ public class CyclingPortal implements CyclingPortalInterface{
 					}
 					return ridersPointsInStage;
 				} else {
-					for (int j = 0; j < (((LocalTime[]) stageList.get(stageId).getStageResults().get(0).get(0)).length); j++) {
+					for (int j = 1; j < (((LocalTime[]) stageList.get(stageId).getStageResults().get(0).get(0)).length)-2; j++) {
 						ArrayList<ArrayList<Object>> tempSegSort = new ArrayList<>();
 						if (segmentList.get(stageList.get(stageId).getSegmentList().get(j))
 								.getType() == SegmentType.SPRINT) {
@@ -626,7 +625,7 @@ public class CyclingPortal implements CyclingPortalInterface{
 		}
 		
 		
-		for(int i = 0 ;  i<stageList.get(stageId).getSegmentList().size();i++) { // sorts per segment
+		for(int i = 0;  i<stageList.get(stageId).getSegmentList().size();i++) { // sorts per segment
 			ArrayList<ArrayList<Object>> tempSegmentSort =  new ArrayList<>();
 			for(int j = 0 ;  j<stageList.get(stageId).getStageResults().size() ; j++) {
 				if(tempSegmentSort.size() == 0) {
