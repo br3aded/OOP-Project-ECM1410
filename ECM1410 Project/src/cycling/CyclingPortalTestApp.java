@@ -136,7 +136,7 @@ public class CyclingPortalTestApp {
 		//System.out.println(Arrays.toString(cyclingportal.getRidersGeneralClassificationRank(0)));
 		
 		
-		System.out.println(Arrays.toString(cyclingportal.getRidersPointsInRace(0)));
+		//System.out.println(Arrays.toString(cyclingportal.getRidersPointsInRace(0)));
 		System.out.println(Arrays.toString(cyclingportal.getRidersMountainPointsInRace(0)));
 		
 		
@@ -146,12 +146,7 @@ public class CyclingPortalTestApp {
 		cyclingportal.saveCyclingPortal("cyclingportal");
 		cyclingportal.eraseCyclingPortal();
 		cyclingportal.loadCyclingPortal("cyclingportal");
-		System.out.println(cyclingportal.raceList.size());
-		System.out.println(cyclingportal.stageList.size());
-		System.out.println(cyclingportal.segmentList.size());
-		System.out.println(cyclingportal.teamList.size());
-		System.out.println(cyclingportal.riderList.size());
-		
+		System.out.println(Arrays.toString(cyclingportal.getRidersPointsInRace(0)));
 		//need to rewrite all of these , go through see what returns and start from scratch
 		System.out.println("end");
 	}
