@@ -17,13 +17,16 @@ public class Team implements Serializable{
 	private ArrayList<Integer> riderIdList;
 	private String teamName;
 	
+	/**
+	 *  returns the team name
+	 */
 	public String getTeamName(){return teamName;}
 	
 	private String descriptor;
 	
 	
 	/**
-	 *  returns the descriptor of a specific team
+	 *  returns the description of a single team
 	 */
 	public String getDescriptor(){return descriptor;}
 	
@@ -33,10 +36,16 @@ public class Team implements Serializable{
 		this.riderIdList = new ArrayList<Integer>();
 	}
 	
+	/**
+	 *  returns all data associated with a single team
+	 */
 	public String toString() {
 		return "Team[teamName = "+teamName+ ", Descriptor="+ descriptor + ", RidersIds =" + riderIdList+"]";
 	}
 	
+	/**
+	 *  adds a rider to a single team
+	 */
 	public void addRider(int riderId) {
 		riderIdList.add(riderId);
 	}
@@ -50,5 +59,8 @@ public class Team implements Serializable{
 		}
 	}
 	
+	/**
+	 *  returns a ArrayList of rider IDs associated with the team
+	 */
 	public ArrayList<Integer> getRiderList() {return riderIdList;}
 }

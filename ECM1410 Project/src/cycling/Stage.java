@@ -23,36 +23,54 @@ public class Stage implements Serializable{
 	
 	private int raceId;
 	
+	/**
+	 *  returns the raceID of the race a stage is associated with
+	 */
 	public int getRaceId() {
 		return raceId;
 	}
 	
 	private String stageName;
 	
+	/**
+	 *  returns the name of a single stage
+	 */
 	public String getStageName() {
 		return stageName;
 	}
 	
 	private String stageDescription;
 	
+	/**
+	 *  returns the description of a single stage
+	 */
 	public String getStageDescription() {
 		return stageDescription;
 	}
 	
 	private double stageLength;
 	
+	/**
+	 *  returns the length (measured in kilometres) of a single stage
+	 */
 	public double getStageLength() {
 		return stageLength;
 	}
 	
 	private LocalDateTime stageStartTime;
 	
+	/**
+	 *  returns the start time of a single stage
+	 */
 	public LocalDateTime getStageStartTime() {
 		return stageStartTime;
 	}
 	
 	private StageType stageType;
 	
+	/**
+	 *  returns the type (eg time trial) of a single stage
+	 */
 	public StageType getStageType() {
 		return stageType;
 	}
