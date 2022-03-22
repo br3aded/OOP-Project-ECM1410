@@ -42,7 +42,7 @@ public class Segment implements Serializable {
 
 	/**
 	 *  returns the length (measured in kilometres) of a segment
-	 *  @returns The length of a segment
+	 *  @return The length of a segment
 	 */
 	public double getLength() {
 		return length;
@@ -60,7 +60,6 @@ public class Segment implements Serializable {
 	 *  Constructor for the sprint segment
 	 *  @param stageId: The ID of the stage associated with the segment
 	 *  @param location: Where the segment finishes
-	 *  @return nothing
 	 */
 	public Segment(int stageId, double location) {
 		this.stageId = stageId;
@@ -72,9 +71,8 @@ public class Segment implements Serializable {
 	 *  @param stageId: The ID of the stage associated with the segment
 	 *  @param location: Where the segment finishes
 	 *  @param averageGradient: The average gradient through the segment
-	 *  @param The length of the stage measured in kilometres
+	 *  @param length: The length of the stage measured in kilometres
 	 *  @param type: The type of hill climb (HC,C1,C2,C3,or C4)
-	 *  @return nothing
 	 */
 	public Segment(int stageId, double location , double averageGradient ,double length, SegmentType type) {
 		this.stageId = stageId;

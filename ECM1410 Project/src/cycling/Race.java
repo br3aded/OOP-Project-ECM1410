@@ -20,7 +20,6 @@ public class Race implements Serializable {
 	/**
 	 *  adds a stage to a race
 	 *  @param stageId: The ID of the stage to be added
-	 *  @returns nothing
 	 */
 	public void addStage(int stageId) {
 		stageIdList.add(stageId);
@@ -28,8 +27,7 @@ public class Race implements Serializable {
 	
 	/**
 	 *  removes a stage from a race
-	 *  @param The ID of the stage to be removed
-	 *  @return nothing
+	 *  @param stageId: The ID of the stage to be removed
 	 */
 	public void removeStage(int stageId) {
 		for(int i = 0; i< stageIdList.size(); i++) {
@@ -44,7 +42,6 @@ public class Race implements Serializable {
 	
 	/**
 	 *  The name of the race
-	 *  @return nothing
 	 */
 	private String raceName;
 	
@@ -58,7 +55,6 @@ public class Race implements Serializable {
 
 	/**
 	 *  The description of the race
-	 *  @return nothing
 	 */
 	private String raceDescription;
 	
@@ -75,8 +71,7 @@ public class Race implements Serializable {
 	 *  Constructor for the Race class
 	 *  @param raceName: The name of the race
 	 *  @param raceDescription: The description of the race
-	 *  @param stageIdList: List of ids of stages associated with the race 
-	 *  @return nothing
+	 *  stageIdList: List of ids of stages associated with the race 
 	 */
 	public Race(String raceName, String raceDescription) {
 		this.raceName = raceName;

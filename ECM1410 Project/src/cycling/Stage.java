@@ -33,7 +33,6 @@ public class Stage implements Serializable{
 	
 	/**
 	 * The stage name
-	 * @return nothing
 	 */
 	private String stageName;
 	
@@ -47,7 +46,6 @@ public class Stage implements Serializable{
 	
 	/**
 	 * The stage description
-	 * @return nothing
 	 */
 	private String stageDescription;
 	
@@ -61,7 +59,6 @@ public class Stage implements Serializable{
 	
 	/**
 	 * The stage length
-	 * @return nothing
 	 */
 	private double stageLength;
 	
@@ -75,7 +72,6 @@ public class Stage implements Serializable{
 	
 	/**
 	 * The stages start time
-	 * @return nothing
 	 */
 	private LocalDateTime stageStartTime;
 	
@@ -89,7 +85,6 @@ public class Stage implements Serializable{
 	
 	/**
 	 * The stage type
-	 * @return nothing
 	 */
 	private StageType stageType;
 	
@@ -103,7 +98,6 @@ public class Stage implements Serializable{
 
 	/**
 	 * State of if the stage is concluded
-	 * @return nothing
 	 */
 	private boolean isConcluded;
 	
@@ -129,13 +123,12 @@ public class Stage implements Serializable{
 	 * 
 	 *  @param raceId: The ID number for the race the stage belongs to
 	 *  @param stageName: The name of the stage
-	 *  @param stageDescription: the description of the stage
-	 *  @param stageLength: The length of the stage measured in kilometres
-	 *  @param stageStartTime: The time that the stage starts
-	 *  @param stageType: the type of stage (eg FLAT,MEDIUM MOUNTAIN,HIGH MOUNTAIN,or TT)
-	 *  @param segmentIdList: A list of ids of segments associated with the stage
-	 *  @param setIsConcluded: Whether the stage is ready for results or not
-	 *  @return nothing
+	 *  @param description: the description of the stage
+	 *  @param length: The length of the stage measured in kilometres
+	 *  @param startTime: The time that the stage starts
+	 *  @param type: the type of stage (eg FLAT,MEDIUM MOUNTAIN,HIGH MOUNTAIN,or TT)
+	 *  segmentIdList: A list of ids of segments associated with the stage
+	 *  setIsConcluded: Whether the stage is ready for results or not
 	*/
 	
 	public Stage(int raceId, String stageName, String description, double length, LocalDateTime startTime,StageType type) {
@@ -151,7 +144,6 @@ public class Stage implements Serializable{
 	
 	/**
 	 *  removes a segment from a single stage
-	 *  @return nothing
 	 */
 	public void removeSegment(int segmentId) {
 		for(int i = 0; i< segmentIdList.size(); i++) {
@@ -164,13 +156,21 @@ public class Stage implements Serializable{
 	
 	/**
 	 *  adds a segment to a segment list
-	 *  @return nothing
 	 */
 	public void setSegmentList(int i , int segmentId) {
 		segmentIdList.add(i,segmentId);
 	}
 	
+	/**
+	 *  gets the list of segments in a stage
+	 *  @return the segmentIdList
+	 */
 	public ArrayList<Integer> getSegmentList() {return segmentIdList;}
 	
+	
+	/**
+	 *  gets the list of results in a stage
+	 *  @return the results of the riders in a stage
+	 */
 	public ArrayList<ArrayList<Object>> getStageResults(){return stageResults;}
 }

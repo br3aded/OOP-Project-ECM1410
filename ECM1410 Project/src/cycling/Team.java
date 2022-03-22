@@ -25,14 +25,13 @@ public class Team implements Serializable{
 	
 	/**
 	 *  The description variable
-	 *  @returns nothing
 	 */
 	private String descriptor;
 	
 	
 	/**
 	 *  returns the description of a single team
-	 *  @returns The descriptor of the team
+	 *  @return The descriptor of the team
 	 */
 	public String getDescriptor(){return descriptor;}
 	
@@ -40,8 +39,7 @@ public class Team implements Serializable{
 	 *  The constructor the Teams
 	 *  @param teamName: The name of the team
 	 *  @param descriptor: The description of the team
-	 *  @param riderIdList: A list of riderIDs associated with the team
-	 *  @returns nothing
+	 * riderIdList: A list of riderIDs associated with the team
 	 */
 	public Team(String teamName, String descriptor) {
 		this.teamName =  teamName;
@@ -59,7 +57,7 @@ public class Team implements Serializable{
 	
 	/**
 	 *  adds a rider to a single team
-	 *  @returns nothing
+	 *  @param riderId: The ID of the rider to be added
 	 */
 	public void addRider(int riderId) {
 		riderIdList.add(riderId);
@@ -68,7 +66,6 @@ public class Team implements Serializable{
 	/**
 	 *  Removes a rider from the riderIdList
 	 *  @param riderId: The riderId of the rider to be removed
-	 *  @returns nothing
 	 */
 	public void setRiderList(int riderId) {
 		for(int i = 0; i< riderIdList.size(); i++) {
