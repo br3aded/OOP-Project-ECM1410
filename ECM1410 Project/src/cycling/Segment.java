@@ -18,18 +18,28 @@ public class Segment implements Serializable {
 	private double length;
 	private SegmentType type;
 	
+	/**
+	 *  gets the stageID of the stage associated with a segment
+	 */
 	public int getStageId() {
 		return stageId;
 	}
-
+	/**
+	 *  gets the location (where the segment finishes) of a segment
+	 */
 	public double getLocation() {
 		return location;
 	}
-	
+	/**
+	 *  returns the average gradient of a segment
+	 */
 	public double getAverageGradient() {
 		return averageGradient;
 	}
 
+	/**
+	 *  returns the length (measured in kilometres) of a segment
+	 */
 	public double getLength() {
 		return length;
 	}

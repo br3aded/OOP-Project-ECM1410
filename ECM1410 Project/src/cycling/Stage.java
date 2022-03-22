@@ -77,10 +77,16 @@ public class Stage implements Serializable{
 
 	private boolean isConcluded;
 	
+	/**
+	 *  gets the whether the stage is in the concluded state or not
+	 */
 	public boolean getIsConcluded() {
 		return isConcluded;
 	}
 
+	/**
+	 *  sets a stage to the concluded state meaning that it can now take rider results
+	 */
 	public void setIsConcluded(boolean isConcluded) {
 		this.isConcluded = isConcluded;
 		this.stageResults = new ArrayList<>();
@@ -97,6 +103,9 @@ public class Stage implements Serializable{
 		this.setIsConcluded(false);
 	}
 	
+	/**
+	 *  removes a segment from a single stage
+	 */
 	public void removeSegment(int segmentId) {
 		for(int i = 0; i< segmentIdList.size(); i++) {
 			if(segmentIdList.get(i) == segmentId) {
@@ -106,6 +115,9 @@ public class Stage implements Serializable{
 		}
 	}
 	
+	/**
+	 *  adds a segment to a segment list
+	 */
 	public void setSegmentList(int i , int segmentId) {
 		segmentIdList.add(i,segmentId);
 	}
