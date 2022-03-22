@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *  Functions related to races
  * 
  * 
- * @author 700027589 & 710019499
+ * @author 700027589 and 710019499
  * @version 1.0
  *
  */
@@ -19,6 +19,8 @@ public class Race implements Serializable {
 	
 	/**
 	 *  adds a stage to a race
+	 *  @param stageId: The ID of the stage to be added
+	 *  @returns nothing
 	 */
 	public void addStage(int stageId) {
 		stageIdList.add(stageId);
@@ -26,6 +28,8 @@ public class Race implements Serializable {
 	
 	/**
 	 *  removes a stage from a race
+	 *  @param The ID of the stage to be removed
+	 *  @return nothing
 	 */
 	public void removeStage(int stageId) {
 		for(int i = 0; i< stageIdList.size(); i++) {
@@ -38,24 +42,42 @@ public class Race implements Serializable {
 	
 	public ArrayList<Integer> getStageList() {return stageIdList;}
 	
+	/**
+	 *  The name of the race
+	 *  @return nothing
+	 */
 	private String raceName;
 	
 	/**
 	 *  gets the name of a single race
+	 *  @return the name of the race
 	 */
 	public String getRaceName() {
 		return raceName;
 	}
 
+	/**
+	 *  The description of the race
+	 *  @return nothing
+	 */
 	private String raceDescription;
 	
 	/**
 	 *  gets the description of a single race
+	 *  @return the descripiton of the race
 	 */
 	public String getRaceDescription() {
 		return raceDescription;
 	}
 
+	
+	/**
+	 *  Constructor for the Race class
+	 *  @param raceName: The name of the race
+	 *  @param raceDescription: The description of the race
+	 *  @param stageIdList: List of ids of stages associated with the race 
+	 *  @return nothing
+	 */
 	public Race(String raceName, String raceDescription) {
 		this.raceName = raceName;
 		this.raceDescription = raceDescription;
@@ -64,6 +86,7 @@ public class Race implements Serializable {
 
 	/**
 	 *  returns the name and description of a single race
+	 *  @return A string containing the raceName and raceDescription
 	 */
 	@Override
 	public String toString() {

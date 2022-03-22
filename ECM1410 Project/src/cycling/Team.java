@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *  Functions related to teams
  * 
  * 
- * @author 700027589 & 710019499
+ * @author 700027589 and 710019499
  * @version 1.0
  *
  */
@@ -18,18 +18,31 @@ public class Team implements Serializable{
 	private String teamName;
 	
 	/**
-	 *  returns the team name
+	 *  returns the team name for a single team
+	 *  @return the team name
 	 */
 	public String getTeamName(){return teamName;}
 	
+	/**
+	 *  The description variable
+	 *  @returns nothing
+	 */
 	private String descriptor;
 	
 	
 	/**
 	 *  returns the description of a single team
+	 *  @returns The descriptor of the team
 	 */
 	public String getDescriptor(){return descriptor;}
 	
+	/**
+	 *  The constructor the Teams
+	 *  @param teamName: The name of the team
+	 *  @param descriptor: The description of the team
+	 *  @param riderIdList: A list of riderIDs associated with the team
+	 *  @returns nothing
+	 */
 	public Team(String teamName, String descriptor) {
 		this.teamName =  teamName;
 		this.descriptor = descriptor;
@@ -38,6 +51,7 @@ public class Team implements Serializable{
 	
 	/**
 	 *  returns all data associated with a single team
+	 *  @return A string of the containing the team name,descriptor and riderIdList
 	 */
 	public String toString() {
 		return "Team[teamName = "+teamName+ ", Descriptor="+ descriptor + ", RidersIds =" + riderIdList+"]";
@@ -45,11 +59,17 @@ public class Team implements Serializable{
 	
 	/**
 	 *  adds a rider to a single team
+	 *  @returns nothing
 	 */
 	public void addRider(int riderId) {
 		riderIdList.add(riderId);
 	}
 	
+	/**
+	 *  Removes a rider from the riderIdList
+	 *  @param riderId: The riderId of the rider to be removed
+	 *  @returns nothing
+	 */
 	public void setRiderList(int riderId) {
 		for(int i = 0; i< riderIdList.size(); i++) {
 			if(riderIdList.get(i) == riderId) {
@@ -61,6 +81,7 @@ public class Team implements Serializable{
 	
 	/**
 	 *  returns a ArrayList of rider IDs associated with the team
+	 *  @return A list of riderIDs
 	 */
 	public ArrayList<Integer> getRiderList() {return riderIdList;}
 }
